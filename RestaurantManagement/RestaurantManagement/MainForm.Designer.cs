@@ -45,11 +45,8 @@
             this.panel5 = new System.Windows.Forms.Panel();
             this.order_btn = new System.Windows.Forms.Button();
             this.Pic2 = new Guna.UI2.WinForms.Guna2PictureBox();
-            this.adminAddCategory2 = new RestaurantManagement.AdminAddCategory();
-            this.adminAddCategory1 = new RestaurantManagement.AdminAddCategory();
+            this.mainpanel = new System.Windows.Forms.Panel();
             this.adminAdduser3 = new RestaurantManagement.AdminAdduser();
-            this.adminAdduser1 = new RestaurantManagement.AdminAdduser();
-            this.adminDashboard1 = new RestaurantManagement.AdminDashboard();
             this.panel6.SuspendLayout();
             this.panel5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Pic2)).BeginInit();
@@ -99,12 +96,12 @@
             // 
             this.panel6.BackColor = System.Drawing.Color.Black;
             this.panel6.Controls.Add(this.button7);
-            this.panel6.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel6.ForeColor = System.Drawing.Color.Red;
             this.panel6.Location = new System.Drawing.Point(202, 10);
             this.panel6.Name = "panel6";
             this.panel6.Size = new System.Drawing.Size(872, 43);
             this.panel6.TabIndex = 39;
+            this.panel6.Paint += new System.Windows.Forms.PaintEventHandler(this.panel6_Paint);
             // 
             // button7
             // 
@@ -154,6 +151,7 @@
             this.category_btn.TabIndex = 3;
             this.category_btn.Text = "CATEGORY";
             this.category_btn.UseVisualStyleBackColor = false;
+            this.category_btn.Click += new System.EventHandler(this.category_btn_Click);
             // 
             // costumer_btn
             // 
@@ -220,6 +218,7 @@
             this.dashboard_btn.TabIndex = 2;
             this.dashboard_btn.Text = "DASHBOARD";
             this.dashboard_btn.UseVisualStyleBackColor = false;
+            this.dashboard_btn.Click += new System.EventHandler(this.dashboard_btn_Click);
             // 
             // label1
             // 
@@ -264,6 +263,7 @@
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(192, 600);
             this.panel5.TabIndex = 38;
+            this.panel5.Paint += new System.Windows.Forms.PaintEventHandler(this.panel5_Paint);
             // 
             // order_btn
             // 
@@ -294,20 +294,13 @@
             this.Pic2.TabIndex = 34;
             this.Pic2.TabStop = false;
             // 
-            // adminAddCategory2
+            // mainpanel
             // 
-            this.adminAddCategory2.Location = new System.Drawing.Point(205, 52);
-            this.adminAddCategory2.Name = "adminAddCategory2";
-            this.adminAddCategory2.Size = new System.Drawing.Size(871, 583);
-            this.adminAddCategory2.TabIndex = 45;
-            this.adminAddCategory2.Load += new System.EventHandler(this.adminAddCategory2_Load);
-            // 
-            // adminAddCategory1
-            // 
-            this.adminAddCategory1.Location = new System.Drawing.Point(203, 99);
-            this.adminAddCategory1.Name = "adminAddCategory1";
-            this.adminAddCategory1.Size = new System.Drawing.Size(321, 71);
-            this.adminAddCategory1.TabIndex = 44;
+            this.mainpanel.Location = new System.Drawing.Point(202, 55);
+            this.mainpanel.Name = "mainpanel";
+            this.mainpanel.Size = new System.Drawing.Size(872, 555);
+            this.mainpanel.TabIndex = 44;
+            this.mainpanel.Paint += new System.Windows.Forms.PaintEventHandler(this.mainpanel_Paint);
             // 
             // adminAdduser3
             // 
@@ -316,34 +309,14 @@
             this.adminAdduser3.Size = new System.Drawing.Size(9, 8);
             this.adminAdduser3.TabIndex = 43;
             // 
-            // adminAdduser1
-            // 
-            this.adminAdduser1.ForeColor = System.Drawing.Color.Black;
-            this.adminAdduser1.Location = new System.Drawing.Point(201, 52);
-            this.adminAdduser1.Name = "adminAdduser1";
-            this.adminAdduser1.Size = new System.Drawing.Size(873, 552);
-            this.adminAdduser1.TabIndex = 42;
-            this.adminAdduser1.Load += new System.EventHandler(this.adminAdduser1_Load);
-            // 
-            // adminDashboard1
-            // 
-            this.adminDashboard1.BackColor = System.Drawing.Color.White;
-            this.adminDashboard1.Location = new System.Drawing.Point(201, 55);
-            this.adminDashboard1.Name = "adminDashboard1";
-            this.adminDashboard1.Size = new System.Drawing.Size(873, 560);
-            this.adminDashboard1.TabIndex = 41;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.ClientSize = new System.Drawing.Size(1085, 620);
-            this.Controls.Add(this.adminAddCategory2);
-            this.Controls.Add(this.adminAddCategory1);
+            this.Controls.Add(this.mainpanel);
             this.Controls.Add(this.adminAdduser3);
-            this.Controls.Add(this.adminAdduser1);
-            this.Controls.Add(this.adminDashboard1);
             this.Controls.Add(this.panel6);
             this.Controls.Add(this.panel5);
             this.Controls.Add(this.panel4);
@@ -354,6 +327,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Load += new System.EventHandler(this.MainForm_Load);
             this.panel6.ResumeLayout(false);
             this.panel5.ResumeLayout(false);
             this.panel5.PerformLayout();
@@ -381,10 +355,7 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Panel panel5;
         private System.Windows.Forms.Button order_btn;
-        private AdminDashboard adminDashboard1;
-        private AdminAdduser adminAdduser1;
         private AdminAdduser adminAdduser3;
-        private AdminAddCategory adminAddCategory1;
-        private AdminAddCategory adminAddCategory2;
+        private System.Windows.Forms.Panel mainpanel;
     }
 }

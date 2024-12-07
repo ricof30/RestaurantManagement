@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data;
 using System.Data.SqlClient;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace RestaurantManagement
@@ -8,24 +9,30 @@ namespace RestaurantManagement
     public partial class AdminAddCategory : UserControl
     {
 
-        private SqlConnection connect = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\ROBEL MANALON\OneDrive\Documents\RMS.mdf;Integrated Security=True;Connect Timeout=30;Encrypt=False");
+        private SqlConnection connect = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=D:\RestaurantManagement\RestaurantManagement\RestaurantManagement\RestaurantManagement\Database.mdf;Integrated Security=True");
 
         public AdminAddCategory()
         {
             InitializeComponent();
-            displayCategoriesData();
+            loadData();
         }
 
-        // Display categories data in DataGridView
-        public void displayCategoriesData()
+        public void loadData()
         {
             try
             {
-                CategoriesData cData = new CategoriesData();
-                List<CategoriesData> listData = cData.AllCategoriesData();
+                string query = "SELECT * FROM Categories"; 
+                SqlDataAdapter adapter = new SqlDataAdapter(query, connect);
+                DataTable dataTable = new DataTable();
+                adapter.Fill(dataTable);
 
-                dataGridView1.DataSource = null; // Clear any existing binding
-                dataGridView1.DataSource = listData; // Bind new data
+
+                dataGridView1.DefaultCellStyle.ForeColor = Color.Black;
+
+                dataGridView1.DataSource = dataTable;
+                //dataGridView1.Columns["id"].Visible = false;
+
+
             }
             catch (Exception ex)
             {
@@ -35,7 +42,7 @@ namespace RestaurantManagement
 
         private void addCategories_addBtn_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(addCategories_category.Text))
+            if (string.IsNullOrWhiteSpace(txtCategory.Text))
             {
                 MessageBox.Show("Category name cannot be empty.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
@@ -43,44 +50,19 @@ namespace RestaurantManagement
 
             try
             {
-                // Open the connection if it's not already open
-                if (checkConnection())
+                connect.Open();
+                string insertQuery = "INSERT INTO Categories (Category) VALUES (@cat)";
+
+                using (SqlCommand insertCmd = new SqlCommand(insertQuery, connect))
                 {
-                    connect.Open();
+                    insertCmd.Parameters.AddWithValue("@cat", txtCategory.Text.Trim());
+                    //insertCmd.Parameters.AddWithValue("@date", DateTime.Now.Date);
 
-                    // Check if the category already exists
-                    string checkCatQuery = "SELECT * FROM Categories WHERE Category = @cat";
+                    insertCmd.ExecuteNonQuery();
+                    loadData();
 
-                    using (SqlCommand cmd = new SqlCommand(checkCatQuery, connect))
-                    {
-                        cmd.Parameters.AddWithValue("@cat", addCategories_category.Text.Trim());
-
-                        SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-                        DataTable table = new DataTable();
-                        adapter.Fill(table);
-
-                        if (table.Rows.Count > 0)
-                        {
-                            MessageBox.Show($"Category '{addCategories_category.Text.Trim()}' already exists.",
-                                            "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        }
-                        else
-                        {
-                            // Insert new category
-                            string insertQuery = "INSERT INTO Categories (Category, date) VALUES (@cat, @date)";
-
-                            using (SqlCommand insertCmd = new SqlCommand(insertQuery, connect))
-                            {
-                                insertCmd.Parameters.AddWithValue("@cat", addCategories_category.Text.Trim());
-                                insertCmd.Parameters.AddWithValue("@date", DateTime.Now.Date);
-
-                                insertCmd.ExecuteNonQuery();
-                                displayCategoriesData();
-
-                                MessageBox.Show("Category added successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            }
-                        }
-                    }
+                    MessageBox.Show("Category added successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    txtCategory.Clear();
                 }
             }
             catch (Exception ex)
@@ -89,9 +71,11 @@ namespace RestaurantManagement
             }
             finally
             {
-                connect.Close(); // Ensure the connection is closed
+                connect.Close();
             }
         }
+
+
 
         // Check if the connection is valid and open it if necessary
         public bool checkConnection()
@@ -108,6 +92,139 @@ namespace RestaurantManagement
             {
                 MessageBox.Show($"Database connection error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
+            }
+        }
+
+        private void addCategories_category_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void AdminAddCategory_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnClear_Click(object sender, EventArgs e)
+        {
+            txtCategory.Clear();
+        }
+
+        private void btnUpdate_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // Ensure a row is selected
+                if (dataGridView1.SelectedRows.Count > 0)
+                {
+                    // Get the CategoryId from the selected row
+                    int categoryId = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells["id"].Value);
+
+                    connect.Open();
+                    string updateQuery = "UPDATE Categories SET Category = @cat, Date = @date WHERE id = @id";
+
+                    using (SqlCommand updateCmd = new SqlCommand(updateQuery, connect))
+                    {
+                        updateCmd.Parameters.AddWithValue("@cat", txtCategory.Text.Trim());
+                        updateCmd.Parameters.AddWithValue("@date", DateTime.Now);
+                        updateCmd.Parameters.AddWithValue("@id", categoryId);
+
+                        int rowsAffected = updateCmd.ExecuteNonQuery();
+
+                        if (rowsAffected > 0)
+                        {
+                            loadData(); // Refresh the DataGridView
+                            MessageBox.Show("Category updated successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            txtCategory.Clear();
+                        }
+                        else
+                        {
+                            MessageBox.Show("No category found to update.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        }
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Please select a row to update.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error updating category: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                connect.Close();
+            }
+        }
+
+
+
+        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            // Ensure the clicked cell is valid (not the header row)
+            if (e.RowIndex >= 0)
+            {
+                // Clear all existing selections
+                dataGridView1.ClearSelection();
+
+                // Select and highlight the clicked row
+                DataGridViewRow selectedRow = dataGridView1.Rows[e.RowIndex];
+                selectedRow.Selected = true;
+
+                // Optionally, display a value from the selected row in a TextBox
+                txtCategory.Text = selectedRow.Cells[1].Value?.ToString();
+            }
+        }
+
+        private void btnRemove_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // Ensure a row is selected
+                if (dataGridView1.SelectedRows.Count > 0)
+                {
+                    // Get the CategoryId from the selected row
+                    int categoryId = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells["id"].Value);
+
+                    connect.Open();
+                    string deleteQuery = "DELETE FROM Categories WHERE id = @id";
+
+                    using (SqlCommand deleteCmd = new SqlCommand(deleteQuery, connect))
+                    {
+                        deleteCmd.Parameters.AddWithValue("@id", categoryId); ;
+
+                        int rowsAffected = deleteCmd.ExecuteNonQuery();
+
+                        if (rowsAffected > 0)
+                        {
+                            loadData(); // Refresh the DataGridView
+                            MessageBox.Show("Category remove successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            txtCategory.Clear();
+                        }
+                        else
+                        {
+                            MessageBox.Show("Removing category failed.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        }
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Please select a row to remove.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error removing category: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                connect.Close();
             }
         }
     }

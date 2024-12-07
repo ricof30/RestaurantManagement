@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -56,20 +57,58 @@ namespace RestaurantManagement
             }
         }
 
-        private void Dashboard_btn(object sender, EventArgs e)
-        {
-
-
-        }
-
-        private void adminAdduser1_Load(object sender, EventArgs e)
+        private void panel6_Paint(object sender, PaintEventArgs e)
         {
 
         }
 
-        private void adminAddCategory2_Load(object sender, EventArgs e)
+        private void panel5_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+
+        private void ShowAdminForm()
+        {
+            
+            AdminDashboard admin = new AdminDashboard();
+            admin.Dock = DockStyle.Fill;
+
+            mainpanel.Controls.Clear(); 
+            mainpanel.Controls.Add(admin);
+
+            admin.Show();
+        }
+
+
+        private void ShowCategoryForm()
+        { 
+            AdminAddCategory category = new AdminAddCategory();
+            category.Dock = DockStyle.Fill;
+
+            mainpanel.Controls.Clear(); 
+            mainpanel.Controls.Add(category);
+
+            category.Show();
+        }
+
+        private void dashboard_btn_Click(object sender, EventArgs e)
+        {
+            ShowAdminForm();
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void mainpanel_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void category_btn_Click(object sender, EventArgs e)
+        {
+            ShowCategoryForm();
         }
     }
 }
