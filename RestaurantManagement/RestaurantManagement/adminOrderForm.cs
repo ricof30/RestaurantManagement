@@ -32,7 +32,7 @@ namespace RestaurantManagement
                 u.username AS CustomerName,      -- Display username
                 f.foodname AS FoodName,          -- Display foodname
                 o.Quantity,
-                o.TotalAmount
+                (o.Quantity * f.price) AS TotalAmount
             FROM 
                 Orders o
             INNER JOIN 
