@@ -88,6 +88,30 @@
     <Compile Include="AdminDashboard.Designer.cs">
       <DependentUpon>AdminDashboard.cs</DependentUpon>
     </Compile>
+    <Compile Include="adminFoodForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="adminFoodForm.Designer.cs">
+      <DependentUpon>adminFoodForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="adminOrderForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="adminOrderForm.Designer.cs">
+      <DependentUpon>adminOrderForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="adminReport.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="adminReport.Designer.cs">
+      <DependentUpon>adminReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="adminUsersForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="adminUsersForm.Designer.cs">
+      <DependentUpon>adminUsersForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="CategoriesData.cs" />
     <Compile Include="connectState\Connect.cs" />
     <Compile Include="DatabaseDataSet.Designer.cs">
@@ -95,12 +119,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DatabaseDataSet.xsd</DependentUpon>
     </Compile>
-    <Compile Include="Form1.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
-    </Compile>
+    <Compile Include="dbHelper.cs" />
     <Compile Include="frmLogin.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -131,6 +150,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AdminDashboard.resx">
       <DependentUpon>AdminDashboard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="adminFoodForm.resx">
+      <DependentUpon>adminFoodForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="adminOrderForm.resx">
+      <DependentUpon>adminOrderForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="adminReport.dje.resx">
+      <DependentUpon>adminReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="adminReport.resx">
+      <DependentUpon>adminReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="adminUsersForm.resx">
+      <DependentUpon>adminUsersForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmLogin.resx">
       <DependentUpon>frmLogin.cs</DependentUpon>

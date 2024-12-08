@@ -9,17 +9,19 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using System.Data.SqlClient;
+using connectState;
 
 namespace RestaurantManagement
 {
 
     public partial class LoginForm : Form
     {
-
-        public string connectionString =(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=D:\RestaurantManagement\RestaurantManagement\RestaurantManagement\RestaurantManagement\Database.mdf;Integrated Security=True");
+        //private SqlConnection connect;
+        
         public LoginForm()
         {
             InitializeComponent();
+            //connect = DbHelper.GetConnection();
             InvalidU.Hide();
             InvalidP.Hide();
         }
@@ -48,7 +50,7 @@ namespace RestaurantManagement
 
         public bool checkConnection()
         {
-            using (SqlConnection connect = new SqlConnection(connectionString))
+            using (SqlConnection connect = DbHelper.GetConnection())
             {
                 try
                 {
@@ -66,7 +68,7 @@ namespace RestaurantManagement
 
         private void Login_User_Click(object sender, EventArgs e)
         {
-            using (SqlConnection connect = new SqlConnection(connectionString))
+            using (SqlConnection connect = DbHelper.GetConnection())
             {
                 if (checkConnection())
                 {
@@ -132,7 +134,7 @@ namespace RestaurantManagement
                 return;
             }
 
-            using (SqlConnection connect = new SqlConnection(connectionString))
+            using (SqlConnection connect = DbHelper.GetConnection())
             {
                 if (checkConnection())
                 {

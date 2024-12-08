@@ -277,6 +277,7 @@
             this.Controls.Add(this.guna2CustomGradientPanel2);
             this.Name = "AdminAdduser";
             this.Size = new System.Drawing.Size(873, 560);
+            this.Load += new System.EventHandler(this.AdminAdduser_Load);
             this.guna2CustomGradientPanel1.ResumeLayout(false);
             this.guna2CustomGradientPanel1.PerformLayout();
             this.guna2CustomGradientPanel2.ResumeLayout(false);

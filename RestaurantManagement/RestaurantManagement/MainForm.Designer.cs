@@ -135,6 +135,7 @@
             this.food_btn.TabIndex = 4;
             this.food_btn.Text = "FOOD";
             this.food_btn.UseVisualStyleBackColor = false;
+            this.food_btn.Click += new System.EventHandler(this.food_btn_Click);
             // 
             // category_btn
             // 
@@ -169,6 +170,7 @@
             this.costumer_btn.TabIndex = 3;
             this.costumer_btn.Text = "REPORT";
             this.costumer_btn.UseVisualStyleBackColor = false;
+            this.costumer_btn.Click += new System.EventHandler(this.costumer_btn_Click);
             // 
             // users_btn
             // 
@@ -185,6 +187,7 @@
             this.users_btn.TabIndex = 4;
             this.users_btn.Text = "USERS";
             this.users_btn.UseVisualStyleBackColor = false;
+            this.users_btn.Click += new System.EventHandler(this.users_btn_Click);
             // 
             // logout
             // 
@@ -281,6 +284,7 @@
             this.order_btn.TabIndex = 42;
             this.order_btn.Text = "ORDER";
             this.order_btn.UseVisualStyleBackColor = false;
+            this.order_btn.Click += new System.EventHandler(this.order_btn_Click);
             // 
             // Pic2
             // 

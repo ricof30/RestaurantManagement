@@ -139,7 +139,7 @@ namespace RestaurantManagement
             if (connect == null)
             {
                 // Replace with your actual connection string
-                connect = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=\"C:\\Users\\ROBEL MANALON\\OneDrive\\Documents\\RMS.mdf\";Integrated Security=True;Connect Timeout=30;Encrypt=False");
+                connect = new SqlConnection(@"Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=D:\\RestaurantManagement\\RestaurantManagement\\RestaurantManagement\\RestaurantManagement\\Database.mdf;Integrated Security=True");
             }
 
             // Open connection if closed
@@ -321,6 +321,11 @@ namespace RestaurantManagement
                     }
                 }
             }
+        }
+
+        private void AdminAdduser_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

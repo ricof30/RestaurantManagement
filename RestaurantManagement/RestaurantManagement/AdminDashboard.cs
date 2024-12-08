@@ -14,9 +14,10 @@ namespace RestaurantManagement
 {
     public partial class AdminDashboard : UserControl
     {
-        private SqlConnection connect = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=D:\RestaurantManagement\RestaurantManagement\RestaurantManagement\RestaurantManagement\Database.mdf;Integrated Security=True");
+        private SqlConnection connect;
         public AdminDashboard()
         {
+            connect = DbHelper.GetConnection();
             InitializeComponent();
         }
 
@@ -60,6 +61,11 @@ namespace RestaurantManagement
             {
                 connect.Close();
             }
+        }
+
+        private void Dashboard_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }

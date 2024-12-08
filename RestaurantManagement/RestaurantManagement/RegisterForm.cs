@@ -15,10 +15,11 @@ namespace RestaurantManagement
 {
     public partial class RegisterLabel : Form
     {
-        private  SqlConnection connect = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=D:\RestaurantManagement\RestaurantManagement\RestaurantManagement\RestaurantManagement\Database.mdf;Integrated Security=True");
+        private SqlConnection connect;
         public RegisterLabel()
         {
             InitializeComponent();
+            connect = DbHelper.GetConnection();
         }
 
         private void tbnExit_Click(object sender, EventArgs e)
@@ -84,13 +85,13 @@ namespace RestaurantManagement
 
                     // Insert new user
                     
-                    string insertData = "INSERT INTO users(username, password, role, status) VALUES(@usern, @pass, @role, @status)";
+                    string insertData = "INSERT INTO users(username, password, role,) VALUES(@usern, @pass, @role,)";
                     using (SqlCommand insertID = new SqlCommand(insertData, connect))
                     {
                         insertID.Parameters.AddWithValue("@usern", txtUsername.Text.Trim());
                         insertID.Parameters.AddWithValue("@pass", txtPassword.Text.Trim());
                         insertID.Parameters.AddWithValue("@role", "User");
-                        insertID.Parameters.AddWithValue("@status", "Approval");
+                        //insertID.Parameters.AddWithValue("@status", "Approval");
 
                         insertID.ExecuteNonQuery();
                         MessageBox.Show("Registered Successfully", "Information Message", MessageBoxButtons.OK, MessageBoxIcon.Information);

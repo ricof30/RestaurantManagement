@@ -91,6 +91,54 @@ namespace RestaurantManagement
             category.Show();
         }
 
+        private void ShowFoodForm()
+        {
+            adminFoodForm category = new adminFoodForm();
+            category.TopLevel = false;
+            category.Dock = DockStyle.Fill;
+
+            mainpanel.Controls.Clear();
+            mainpanel.Controls.Add(category);
+
+            category.Show();
+        }
+
+        private void ShowOrderForm()
+        {
+            adminOrderForm category = new adminOrderForm();
+            category.TopLevel = false;
+            category.Dock = DockStyle.Fill;
+
+            mainpanel.Controls.Clear();
+            mainpanel.Controls.Add(category);
+
+            category.Show();
+        }
+
+        private void ShowReportForm()
+        {
+            adminReport category = new adminReport();
+            category.TopLevel = false;
+            category.Dock = DockStyle.Fill;
+
+            mainpanel.Controls.Clear();
+            mainpanel.Controls.Add(category);
+
+            category.Show();
+        }
+
+        private void ShowUserForm()
+        {
+            adminUsersForm category = new adminUsersForm();
+            category.TopLevel = false;
+            category.Dock = DockStyle.Fill;
+
+            mainpanel.Controls.Clear();
+            mainpanel.Controls.Add(category);
+
+            category.Show();
+        }
+
         private void dashboard_btn_Click(object sender, EventArgs e)
         {
             ShowAdminForm();
@@ -109,6 +157,26 @@ namespace RestaurantManagement
         private void category_btn_Click(object sender, EventArgs e)
         {
             ShowCategoryForm();
+        }
+
+        private void users_btn_Click(object sender, EventArgs e)
+        {
+            ShowUserForm();
+        }
+
+        private void food_btn_Click(object sender, EventArgs e)
+        {
+            ShowFoodForm();
+        }
+
+        private void costumer_btn_Click(object sender, EventArgs e)
+        {
+            ShowReportForm();
+        }
+
+        private void order_btn_Click(object sender, EventArgs e)
+        {
+            ShowOrderForm();
         }
     }
 }

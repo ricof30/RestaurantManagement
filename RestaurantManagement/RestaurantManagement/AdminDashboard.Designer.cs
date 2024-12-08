@@ -279,6 +279,7 @@
             this.Dashboard.Name = "Dashboard";
             this.Dashboard.Size = new System.Drawing.Size(867, 359);
             this.Dashboard.TabIndex = 1;
+            this.Dashboard.Paint += new System.Windows.Forms.PaintEventHandler(this.Dashboard_Paint);
             // 
             // AdminDashboard
             // 

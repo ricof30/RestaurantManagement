@@ -3,16 +3,17 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.Windows.Forms;
+using connectState;
 
 namespace RestaurantManagement
 {
     public partial class AdminAddCategory : UserControl
     {
 
-        private SqlConnection connect = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=D:\RestaurantManagement\RestaurantManagement\RestaurantManagement\RestaurantManagement\Database.mdf;Integrated Security=True");
-
+        private SqlConnection connect;
         public AdminAddCategory()
         {
+            connect = DbHelper.GetConnection();
             InitializeComponent();
             loadData();
         }
@@ -21,6 +22,7 @@ namespace RestaurantManagement
         {
             try
             {
+                
                 string query = "SELECT * FROM Categories"; 
                 SqlDataAdapter adapter = new SqlDataAdapter(query, connect);
                 DataTable dataTable = new DataTable();
@@ -47,9 +49,10 @@ namespace RestaurantManagement
                 MessageBox.Show("Category name cannot be empty.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-
+           
             try
             {
+               
                 connect.Open();
                 string insertQuery = "INSERT INTO Categories (Category) VALUES (@cat)";
 
@@ -80,6 +83,7 @@ namespace RestaurantManagement
         // Check if the connection is valid and open it if necessary
         public bool checkConnection()
         {
+    
             try
             {
                 if (connect.State == ConnectionState.Closed)
@@ -181,7 +185,6 @@ namespace RestaurantManagement
                 txtCategory.Text = selectedRow.Cells[1].Value?.ToString();
             }
         }
-
         private void btnRemove_Click(object sender, EventArgs e)
         {
             try
@@ -226,6 +229,11 @@ namespace RestaurantManagement
             {
                 connect.Close();
             }
+        }
+
+        private void guna2CustomGradientPanel1_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }
