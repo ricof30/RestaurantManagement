@@ -320,7 +320,7 @@
             this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.ClientSize = new System.Drawing.Size(1085, 620);
             this.Controls.Add(this.mainpanel);
-            this.Controls.Add(this.adminAdduser3);
+            //this.Controls.Add(this.adminAdduser3);
             this.Controls.Add(this.panel6);
             this.Controls.Add(this.panel5);
             this.Controls.Add(this.panel4);

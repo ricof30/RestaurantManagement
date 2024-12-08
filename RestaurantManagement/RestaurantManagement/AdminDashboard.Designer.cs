@@ -31,7 +31,7 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel8 = new System.Windows.Forms.Panel();
             this.label8 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
+            this.lblTodayIncome = new System.Windows.Forms.Label();
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
             this.panel10 = new System.Windows.Forms.Panel();
             this.label3 = new System.Windows.Forms.Label();
@@ -39,15 +39,15 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.panel9 = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
+            this.lblAllCustomer = new System.Windows.Forms.Label();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.panel7 = new System.Windows.Forms.Panel();
             this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
+            this.lblTotalIncome = new System.Windows.Forms.Label();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
-            this.Dashboard = new System.Windows.Forms.Panel();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.panel1.SuspendLayout();
             this.panel8.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
@@ -58,6 +58,7 @@
             this.panel7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             this.panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -71,12 +72,13 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(867, 162);
             this.panel1.TabIndex = 0;
+            this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             // 
             // panel8
             // 
             this.panel8.BackColor = System.Drawing.Color.White;
             this.panel8.Controls.Add(this.label8);
-            this.panel8.Controls.Add(this.label9);
+            this.panel8.Controls.Add(this.lblTodayIncome);
             this.panel8.Controls.Add(this.pictureBox4);
             this.panel8.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.panel8.Location = new System.Drawing.Point(445, 11);
@@ -96,16 +98,16 @@
             this.label8.Text = "TODAY\'S INCOME";
             this.label8.Click += new System.EventHandler(this.label8_Click);
             // 
-            // label9
+            // lblTodayIncome
             // 
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.label9.Location = new System.Drawing.Point(114, 22);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(44, 18);
-            this.label9.TabIndex = 0;
-            this.label9.Text = "$0.00";
+            this.lblTodayIncome.AutoSize = true;
+            this.lblTodayIncome.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTodayIncome.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.lblTodayIncome.Location = new System.Drawing.Point(114, 22);
+            this.lblTodayIncome.Name = "lblTodayIncome";
+            this.lblTodayIncome.Size = new System.Drawing.Size(16, 18);
+            this.lblTodayIncome.TabIndex = 0;
+            this.lblTodayIncome.Text = "0";
             // 
             // pictureBox4
             // 
@@ -167,7 +169,7 @@
             // 
             this.panel9.BackColor = System.Drawing.Color.White;
             this.panel9.Controls.Add(this.label2);
-            this.panel9.Controls.Add(this.label5);
+            this.panel9.Controls.Add(this.lblAllCustomer);
             this.panel9.Controls.Add(this.pictureBox2);
             this.panel9.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.panel9.Location = new System.Drawing.Point(230, 12);
@@ -186,16 +188,16 @@
             this.label2.TabIndex = 1;
             this.label2.Text = "ALL COSTUMER";
             // 
-            // label5
+            // lblAllCustomer
             // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.label5.Location = new System.Drawing.Point(114, 22);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(16, 18);
-            this.label5.TabIndex = 0;
-            this.label5.Text = "0";
+            this.lblAllCustomer.AutoSize = true;
+            this.lblAllCustomer.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAllCustomer.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.lblAllCustomer.Location = new System.Drawing.Point(114, 22);
+            this.lblAllCustomer.Name = "lblAllCustomer";
+            this.lblAllCustomer.Size = new System.Drawing.Size(16, 18);
+            this.lblAllCustomer.TabIndex = 0;
+            this.lblAllCustomer.Text = "0";
             // 
             // pictureBox2
             // 
@@ -211,7 +213,7 @@
             // 
             this.panel7.BackColor = System.Drawing.Color.White;
             this.panel7.Controls.Add(this.label6);
-            this.panel7.Controls.Add(this.label7);
+            this.panel7.Controls.Add(this.lblTotalIncome);
             this.panel7.Controls.Add(this.pictureBox3);
             this.panel7.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.panel7.Location = new System.Drawing.Point(659, 11);
@@ -230,16 +232,17 @@
             this.label6.TabIndex = 1;
             this.label6.Text = "TOTAL INCOME";
             // 
-            // label7
+            // lblTotalIncome
             // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.label7.Location = new System.Drawing.Point(115, 22);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(44, 18);
-            this.label7.TabIndex = 0;
-            this.label7.Text = "$0.00";
+            this.lblTotalIncome.AutoSize = true;
+            this.lblTotalIncome.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTotalIncome.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.lblTotalIncome.Location = new System.Drawing.Point(115, 22);
+            this.lblTotalIncome.Name = "lblTotalIncome";
+            this.lblTotalIncome.Size = new System.Drawing.Size(16, 18);
+            this.lblTotalIncome.TabIndex = 0;
+            this.lblTotalIncome.Text = "0";
+            this.lblTotalIncome.Click += new System.EventHandler(this.label7_Click);
             // 
             // pictureBox3
             // 
@@ -254,8 +257,8 @@
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.panel2.Controls.Add(this.dataGridView1);
             this.panel2.Controls.Add(this.label1);
-            this.panel2.Controls.Add(this.Dashboard);
             this.panel2.Location = new System.Drawing.Point(3, 172);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(867, 388);
@@ -272,14 +275,19 @@
             this.label1.TabIndex = 2;
             this.label1.Text = "ALL TODAY\'S COSTUMER";
             // 
-            // Dashboard
+            // dataGridView1
             // 
-            this.Dashboard.BackColor = System.Drawing.Color.White;
-            this.Dashboard.Location = new System.Drawing.Point(0, 42);
-            this.Dashboard.Name = "Dashboard";
-            this.Dashboard.Size = new System.Drawing.Size(867, 359);
-            this.Dashboard.TabIndex = 1;
-            this.Dashboard.Paint += new System.Windows.Forms.PaintEventHandler(this.Dashboard_Paint);
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.AllowUserToDeleteRows = false;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Location = new System.Drawing.Point(2, 55);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.ReadOnly = true;
+            this.dataGridView1.RowHeadersWidth = 51;
+            this.dataGridView1.RowTemplate.Height = 24;
+            this.dataGridView1.Size = new System.Drawing.Size(864, 332);
+            this.dataGridView1.TabIndex = 3;
+            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // AdminDashboard
             // 
@@ -306,6 +314,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -314,23 +323,23 @@
 
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Panel Dashboard;
         private System.Windows.Forms.Panel panel9;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label lblAllCustomer;
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.Panel panel8;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label lblTodayIncome;
         private System.Windows.Forms.PictureBox pictureBox4;
         private System.Windows.Forms.Panel panel7;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label lblTotalIncome;
         private System.Windows.Forms.PictureBox pictureBox3;
         private System.Windows.Forms.Panel panel10;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.DataGridView dataGridView1;
     }
 }

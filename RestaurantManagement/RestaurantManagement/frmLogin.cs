@@ -10,6 +10,9 @@ using System.Windows.Forms;
 
 using System.Data.SqlClient;
 using connectState;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
+using System.Web.Security;
+using RestaurantManagement;
 
 namespace RestaurantManagement
 {
@@ -118,48 +121,59 @@ namespace RestaurantManagement
 
         private void Login_User_Click_1(object sender, EventArgs e)
         {
-            if (txtLoginUsername.Text == "" && txtLoginPassword.Text == "")
+            // Validate empty fields
+            if (string.IsNullOrWhiteSpace(txtLoginUsername.Text))
             {
-                MessageBox.Show("Please fill all the empty fields", "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Please fill the username field", "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            else if (txtLoginUsername.Text == "")
+            if (string.IsNullOrWhiteSpace(txtLoginPassword.Text))
             {
-                MessageBox.Show("Please fill username fields", "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            else if (txtLoginPassword.Text == "")
-            {
-                MessageBox.Show("Please fill password fields", "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Please fill the password field", "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
             using (SqlConnection connect = DbHelper.GetConnection())
             {
-                if (checkConnection())
+                try
                 {
-                    try
+                    // SQL query to validate the user
+                    string selectData = "SELECT role FROM users WHERE username = @usern AND password = @pass";
+
+                    using (SqlCommand cmd = new SqlCommand(selectData, connect))
                     {
-                        string selectData = "SELECT * FROM users WHERE username = @usern AND password = @pass";
+                        // Add parameters to prevent SQL injection
+                        cmd.Parameters.Add("@usern", SqlDbType.VarChar).Value = txtLoginUsername.Text.Trim();
+                        cmd.Parameters.Add("@pass", SqlDbType.VarChar).Value = txtLoginPassword.Text.Trim(); // Use hashed password in production
 
-                        using (SqlCommand cmd = new SqlCommand(selectData, connect))
+                        connect.Open();
+                        using (SqlDataReader reader = cmd.ExecuteReader())
                         {
-                            // Ensure to use specific types
-                            cmd.Parameters.Add("@usern", SqlDbType.VarChar).Value = txtLoginUsername.Text.Trim();
-                            cmd.Parameters.Add("@pass", SqlDbType.VarChar).Value = txtLoginPassword.Text.Trim(); // Hash password if stored in the database
-
-                            SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-                            DataTable table = new DataTable();
-                            adapter.Fill(table);
-
-                            if (table.Rows.Count > 0)
+                            if (reader.Read()) // Check if a matching user is found
                             {
-                                MessageBox.Show("Login Successfully", "Information Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                string role = reader["role"].ToString();
 
-                                MainForm mForm = new MainForm();
-                                mForm.Show();
+                                if (role == "Admin")
+                                {
+                                    MessageBox.Show("Login Successfully as Admin", "Information Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                                this.Hide();
+                                    // Open Admin Dashboard
+                                    MainForm mForm = new MainForm();
+                                    mForm.Show();
+
+                                    this.Hide();
+                                }
+                                else
+                                {
+                                    MessageBox.Show($"Login Successful! Redirecting to {role} Dashboard.", "Information Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                    Application.Exit();
+
+                                    // Open User Dashboard or another form as required
+                                    //UserForm uForm = new UserForm();
+                                    //uForm.Show();
+
+                                    //this.Hide();
+                                }
                             }
                             else
                             {
@@ -167,39 +181,14 @@ namespace RestaurantManagement
                             }
                         }
                     }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show("Correction Failed: " + ex.Message, "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                    finally
-                    {
-                        connect.Close();
-                    }
-
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
-
-            //if (txtLoginUsername.Text == "rodel")
-            //{
-            //    InvalidU.Hide();
-            //    if (txtLoginPassword.Text == "Password")
-            //    {
-            //        InvalidP.Hide();
-            //        MainForm mForm = new MainForm();
-            //        mForm.Show();
-
-            //        this.Hide();
-            //    }
-            //    else
-            //    {
-            //        InvalidP.Show();
-            //    }
-            //}
-            //else
-            //{
-            //    InvalidU.Show();
-            //}
         }
+
 
         private void tbnExit_Click(object sender, EventArgs e)
         {

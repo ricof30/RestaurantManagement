@@ -54,7 +54,7 @@ namespace RestaurantManagement
                 }
 
                 // Check if username is already taken
-                string selectData = "SELECT * FROM users WHERE username = @usern";
+                string selectData = "SELECT * FROM Users WHERE username = @usern";
                 using (SqlCommand cmd = new SqlCommand(selectData, connect))
                 {
                     cmd.Parameters.AddWithValue("@usern", txtUsername.Text.Trim());
@@ -85,12 +85,12 @@ namespace RestaurantManagement
 
                     // Insert new user
                     
-                    string insertData = "INSERT INTO users(username, password, role,) VALUES(@usern, @pass, @role,)";
+                    string insertData = "INSERT INTO users(username, password, role) VALUES(@usern, @pass, @role)";
                     using (SqlCommand insertID = new SqlCommand(insertData, connect))
                     {
                         insertID.Parameters.AddWithValue("@usern", txtUsername.Text.Trim());
                         insertID.Parameters.AddWithValue("@pass", txtPassword.Text.Trim());
-                        insertID.Parameters.AddWithValue("@role", "User");
+                        insertID.Parameters.AddWithValue("@role", "Admin");
                         //insertID.Parameters.AddWithValue("@status", "Approval");
 
                         insertID.ExecuteNonQuery();

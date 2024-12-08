@@ -24,19 +24,35 @@ namespace RestaurantManagement
         {
             try
             {
-                string query = "SELECT * FROM Order";
+                // SQL query with JOIN to get username and foodname
+                string query = @"
+            SELECT 
+                o.OrderId,
+                o.OrderDate,
+                u.username AS CustomerName,      -- Display username
+                f.foodname AS FoodName,          -- Display foodname
+                o.Quantity,
+                o.TotalAmount
+            FROM 
+                Orders o
+            INNER JOIN 
+                Users u ON o.UserId = u.Id      -- Join Users table to get username
+            INNER JOIN 
+                Food f ON o.FoodId = f.Id       -- Join Food table to get foodname";
+
                 SqlDataAdapter adapter = new SqlDataAdapter(query, connect);
                 DataTable dataTable = new DataTable();
                 adapter.Fill(dataTable);
 
-
-                dataGridView1.DefaultCellStyle.ForeColor = Color.Black;
-
+                // Set the DataGridView's data source
                 dataGridView1.DataSource = dataTable;
+
+                // Optional: Change font color for the DataGridView
+                dataGridView1.DefaultCellStyle.ForeColor = Color.Black;
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error displaying Food: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Error displaying orders: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -48,6 +64,7 @@ namespace RestaurantManagement
         private void adminOrderForm_Load(object sender, EventArgs e)
         {
             loadData();
+            label1.ForeColor = Color.Black;
         }
     }
 }

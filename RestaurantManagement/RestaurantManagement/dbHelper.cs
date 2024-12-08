@@ -15,7 +15,7 @@ namespace RestaurantManagement
         public static string GetConnectionString()
         {
             // Replace with your actual connection string
-            return "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=D:\\RestaurantManagement\\RestaurantManagement\\RestaurantManagement\\RestaurantManagement\\Database.mdf;Integrated Security=True";
+            return "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Rico\\Documents\\GitHub\\RestaurantManagement\\RestaurantManagement\\RestaurantManagement\\Database.mdf;Integrated Security=True";
         }
 
         // Method to create and return a new SqlConnection

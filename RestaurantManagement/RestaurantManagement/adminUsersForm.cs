@@ -30,8 +30,8 @@ namespace RestaurantManagement
 
 
                 dataGridView1.DefaultCellStyle.ForeColor = Color.Black;
-
                 dataGridView1.DataSource = dataTable;
+                dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             }
             catch (Exception ex)
             {
