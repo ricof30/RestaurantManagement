@@ -37,25 +37,41 @@ namespace RestaurantManagement
 
         private void LoadAppetizerData()
         {
+           
             try
             {
+                int userId = GetUserId(connect, username);
+
+                // Query with parameterized SQL
                 string query = @"
-                SELECT 
-                    Orders.OrderId,
-                    Orders.FoodId,
-                    Food.foodname,
-                    Food.price,
-                    Categories.category,
-                    Orders.Quantity,
-                    Orders.TotalAmount
-                FROM Orders
-                INNER JOIN Food ON Orders.FoodId = Food.Id
-                INNER JOIN Categories ON Food.category_id = Categories.Id
-                WHERE Categories.category = 'Appetizer'";
+        SELECT 
+            Orders.OrderId,
+            Orders.FoodId,
+            Food.foodname,
+            Food.price,
+            Categories.category,
+            Orders.Quantity,
+            Orders.TotalAmount
+        FROM Orders
+        INNER JOIN Food ON Orders.FoodId = Food.Id
+        INNER JOIN Categories ON Food.category_id = Categories.Id
+        WHERE Orders.UserId = @UserId
+        AND Categories.category = 'Appetizer'";
 
-                DataTable table = DbHelper.ExecuteQuery(query);
+                using (SqlCommand cmd = new SqlCommand(query, connect))
+                {
+                    // Add parameter
+                    cmd.Parameters.AddWithValue("@UserId", userId);
 
-                appetizerGridView.DataSource = table;
+                    using (SqlDataAdapter adapter = new SqlDataAdapter(cmd))
+                    {
+                        DataTable table = new DataTable();
+                        adapter.Fill(table);
+
+                        // Bind the data to the DataGridView
+                        appetizerGridView.DataSource = table;
+                    }
+                }
 
                 if (appetizerGridView.Columns["FoodId"] != null)
                 {

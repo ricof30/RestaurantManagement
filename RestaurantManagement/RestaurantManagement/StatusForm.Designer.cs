@@ -36,29 +36,34 @@
             // appetizerGridView
             // 
             this.appetizerGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.appetizerGridView.Location = new System.Drawing.Point(12, 85);
+            this.appetizerGridView.Location = new System.Drawing.Point(16, 105);
+            this.appetizerGridView.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.appetizerGridView.Name = "appetizerGridView";
-            this.appetizerGridView.Size = new System.Drawing.Size(604, 233);
+            this.appetizerGridView.RowHeadersWidth = 51;
+            this.appetizerGridView.Size = new System.Drawing.Size(805, 287);
             this.appetizerGridView.TabIndex = 40;
+            this.appetizerGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.appetizerGridView_CellContentClick);
             // 
             // label5
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(8, 46);
+            this.label5.Location = new System.Drawing.Point(11, 57);
+            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(112, 20);
+            this.label5.Size = new System.Drawing.Size(135, 25);
             this.label5.TabIndex = 41;
             this.label5.Text = "Order Status";
             // 
             // StatusForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(628, 439);
+            this.ClientSize = new System.Drawing.Size(837, 540);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.appetizerGridView);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "StatusForm";
             this.Text = "StatusForm";
             this.Load += new System.EventHandler(this.StatusForm_Load);

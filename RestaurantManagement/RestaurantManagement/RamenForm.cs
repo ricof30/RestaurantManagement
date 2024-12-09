@@ -37,23 +37,38 @@ namespace RestaurantManagement
         {
             try
             {
+                int userId = GetUserId(connect, username);
+
+                // Parameterized query for filtering by category and user
                 string query = @"
-    SELECT 
-        Orders.OrderId,
-        Orders.FoodId,
-        Food.foodname,
-        Food.price,
-        Categories.category,
-        Orders.Quantity,
-        Orders.TotalAmount
-    FROM Orders
-    INNER JOIN Food ON Orders.FoodId = Food.Id
-    INNER JOIN Categories ON Food.category_id = Categories.Id
-    WHERE Categories.category = 'Ramen'";
+                SELECT 
+                    Orders.OrderId,
+                    Orders.FoodId,
+                    Food.foodname,
+                    Food.price,
+                    Categories.category,
+                    Orders.Quantity,
+                    Orders.TotalAmount
+                FROM Orders
+                INNER JOIN Food ON Orders.FoodId = Food.Id
+                INNER JOIN Categories ON Food.category_id = Categories.Id
+                WHERE Categories.category = @Category
+                AND Orders.UserId = @UserId";
 
-                DataTable table = DbHelper.ExecuteQuery(query);
+                using (SqlCommand cmd = new SqlCommand(query, connect))
+                {
+                    cmd.Parameters.AddWithValue("@Category", "Ramen");
+                    cmd.Parameters.AddWithValue("@UserId", userId);
 
-                appetizerGridView.DataSource = table;
+                    using (SqlDataAdapter adapter = new SqlDataAdapter(cmd))
+                    {
+                        DataTable table = new DataTable();
+                        adapter.Fill(table);
+
+                        // Bind data to the DataGridView
+                        appetizerGridView.DataSource = table;
+                    }
+                }
 
                 if (appetizerGridView.Columns["FoodId"] != null)
                 {
@@ -209,6 +224,7 @@ namespace RestaurantManagement
 
             using (SqlCommand cmd = new SqlCommand(query, conn))
             {
+                connect.Open();
                 cmd.Parameters.AddWithValue("@username", username);
 
                 object result = cmd.ExecuteScalar();              

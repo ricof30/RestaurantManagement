@@ -36,25 +36,38 @@ namespace RestaurantManagement
 
         private void LoadAppetizerData()
         {
+            int userId = GetUserId(connect, username);
             try
             {
                 string query = @"
-    SELECT 
-        Orders.OrderId,
-        Orders.FoodId,
-        Food.foodname,
-        Food.price,
-        Categories.category,
-        Orders.Quantity,
-        Orders.TotalAmount
-    FROM Orders
-    INNER JOIN Food ON Orders.FoodId = Food.Id
-    INNER JOIN Categories ON Food.category_id = Categories.Id
-    WHERE Categories.category = 'Drinks'";
+                SELECT 
+                    Orders.OrderId,
+                    Orders.FoodId,
+                    Food.foodname,
+                    Food.price,
+                    Categories.category,
+                    Orders.Quantity,
+                    Orders.TotalAmount
+                FROM Orders
+                INNER JOIN Food ON Orders.FoodId = Food.Id
+                INNER JOIN Categories ON Food.category_id = Categories.Id
+                WHERE Orders.UserId = @UserId
+                AND Categories.category = 'Drinks'";
 
-                DataTable table = DbHelper.ExecuteQuery(query);
+                using (SqlCommand cmd = new SqlCommand(query, connect))
+                {
+                    // Add parameter
+                    cmd.Parameters.AddWithValue("@UserId", userId);
 
-                appetizerGridView.DataSource = table;
+                    using (SqlDataAdapter adapter = new SqlDataAdapter(cmd))
+                    {
+                        DataTable table = new DataTable();
+                        adapter.Fill(table);
+
+                        // Bind the data to the DataGridView
+                        appetizerGridView.DataSource = table;
+                    }
+                }
 
                 if (appetizerGridView.Columns["FoodId"] != null)
                 {
@@ -127,7 +140,7 @@ namespace RestaurantManagement
                 {
                     Text = row["foodname"].ToString(),
                     Location = new Point(10, 120),
-                    AutoSize = true
+                    AutoSize = trued
                 };
                 panel.Controls.Add(lblName);
 

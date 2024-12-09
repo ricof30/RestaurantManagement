@@ -99,7 +99,7 @@ namespace RestaurantManagement
         private void button7_Click(object sender, EventArgs e)
         {
             ShowUserPanel.Controls.Clear();
-            StatusForm status = new StatusForm();
+            StatusForm status = new StatusForm(username);
             status.TopLevel = false;
             ShowUserPanel.Controls.Add(status);
             status.Dock = DockStyle.Fill;
@@ -173,6 +173,11 @@ namespace RestaurantManagement
         }
 
         private void ShowUserPanel_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void panel6_Paint(object sender, PaintEventArgs e)
         {
 
         }

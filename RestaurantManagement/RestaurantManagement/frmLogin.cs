@@ -145,7 +145,7 @@ namespace RestaurantManagement
                             if (reader.Read())                            {
                                 string role = reader["role"].ToString();
 
-                                if (role == "User")
+                                if (role == "Admin")
                                 {
                                     MessageBox.Show($"Login Successfully as {role}", "Information Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
 

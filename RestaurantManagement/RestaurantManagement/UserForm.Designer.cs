@@ -152,6 +152,7 @@
             this.panel6.Name = "panel6";
             this.panel6.Size = new System.Drawing.Size(192, 600);
             this.panel6.TabIndex = 45;
+            this.panel6.Paint += new System.Windows.Forms.PaintEventHandler(this.panel6_Paint);
             // 
             // label2
             // 
@@ -297,7 +298,7 @@
             this.ShowUserPanel.Controls.Add(this.label5);
             this.ShowUserPanel.Controls.Add(this.panel5);
             this.ShowUserPanel.Location = new System.Drawing.Point(209, 55);
-            this.ShowUserPanel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.ShowUserPanel.Margin = new System.Windows.Forms.Padding(4);
             this.ShowUserPanel.Name = "ShowUserPanel";
             this.ShowUserPanel.Size = new System.Drawing.Size(861, 549);
             this.ShowUserPanel.TabIndex = 46;
@@ -330,7 +331,7 @@
             // textBox1
             // 
             this.textBox1.Location = new System.Drawing.Point(601, 350);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.textBox1.Margin = new System.Windows.Forms.Padding(4);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(132, 22);
             this.textBox1.TabIndex = 24;
@@ -368,7 +369,7 @@
             this.panel9.Controls.Add(this.label12);
             this.panel9.Controls.Add(this.pictureBox4);
             this.panel9.Location = new System.Drawing.Point(269, 81);
-            this.panel9.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel9.Margin = new System.Windows.Forms.Padding(4);
             this.panel9.Name = "panel9";
             this.panel9.Size = new System.Drawing.Size(223, 211);
             this.panel9.TabIndex = 21;
@@ -411,7 +412,7 @@
             // 
             this.pictureBox4.Image = global::RestaurantManagement.Properties.Resources.Smoked_Salmon;
             this.pictureBox4.Location = new System.Drawing.Point(4, 0);
-            this.pictureBox4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pictureBox4.Margin = new System.Windows.Forms.Padding(4);
             this.pictureBox4.Name = "pictureBox4";
             this.pictureBox4.Size = new System.Drawing.Size(213, 150);
             this.pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -426,7 +427,7 @@
             this.panel8.Controls.Add(this.label10);
             this.panel8.Controls.Add(this.pictureBox3);
             this.panel8.Location = new System.Drawing.Point(19, 306);
-            this.panel8.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel8.Margin = new System.Windows.Forms.Padding(4);
             this.panel8.Name = "panel8";
             this.panel8.Size = new System.Drawing.Size(223, 211);
             this.panel8.TabIndex = 20;
@@ -469,7 +470,7 @@
             // 
             this.pictureBox3.Image = global::RestaurantManagement.Properties.Resources.Cheese_Sandwich;
             this.pictureBox3.Location = new System.Drawing.Point(4, 0);
-            this.pictureBox3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pictureBox3.Margin = new System.Windows.Forms.Padding(4);
             this.pictureBox3.Name = "pictureBox3";
             this.pictureBox3.Size = new System.Drawing.Size(213, 150);
             this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -484,7 +485,7 @@
             this.panel7.Controls.Add(this.label8);
             this.panel7.Controls.Add(this.pictureBox2);
             this.panel7.Location = new System.Drawing.Point(269, 306);
-            this.panel7.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel7.Margin = new System.Windows.Forms.Padding(4);
             this.panel7.Name = "panel7";
             this.panel7.Size = new System.Drawing.Size(223, 211);
             this.panel7.TabIndex = 19;
@@ -528,7 +529,7 @@
             // 
             this.pictureBox2.Image = global::RestaurantManagement.Properties.Resources.Turkey_Meatballs;
             this.pictureBox2.Location = new System.Drawing.Point(4, 0);
-            this.pictureBox2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pictureBox2.Margin = new System.Windows.Forms.Padding(4);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(213, 150);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -566,7 +567,7 @@
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(527, 139);
-            this.dataGridView1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dataGridView1.Margin = new System.Windows.Forms.Padding(4);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersWidth = 51;
             this.dataGridView1.Size = new System.Drawing.Size(320, 185);
@@ -602,7 +603,7 @@
             this.panel5.Controls.Add(this.label1);
             this.panel5.Controls.Add(this.pictureBox1);
             this.panel5.Location = new System.Drawing.Point(19, 81);
-            this.panel5.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel5.Margin = new System.Windows.Forms.Padding(4);
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(223, 211);
             this.panel5.TabIndex = 0;
@@ -647,7 +648,7 @@
             // 
             this.pictureBox1.Image = global::RestaurantManagement.Properties.Resources.Chicken_Meatballs;
             this.pictureBox1.Location = new System.Drawing.Point(4, 0);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(213, 150);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -697,7 +698,7 @@
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "UserForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "UserForm";
