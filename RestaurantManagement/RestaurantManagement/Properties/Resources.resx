@@ -118,37 +118,49 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="lll" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\lll.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="PAPWET" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\PAPWET.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="USER1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\USER1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="RESTURANT" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\RESTURANT.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="COSTUMER" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\COSTUMER.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="lll" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\lll.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="MONEY" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\MONEY.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="MONEY1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\MONEY1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Chicken Meatballs" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Chicken Meatballs.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="multiICON" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\multiICON.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="COSTUMER1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\COSTUMER1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="tttt" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\tttt.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Smoked Salmon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Smoked Salmon.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="logo" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\logo.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="COSTUMER1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\COSTUMER1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="RESTURANT" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\RESTURANT.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Cheese Sandwich" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Cheese Sandwich.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="tttt" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tttt.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="multiICON" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\multiICON.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="USER1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\USER1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PAPWET" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\PAPWET.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="MONEY1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\MONEY1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Turkey Meatballs" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Turkey Meatballs.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

@@ -32,7 +32,6 @@ namespace RestaurantManagement
                 dataGridView1.DefaultCellStyle.ForeColor = Color.Black;
 
                 dataGridView1.DataSource = dataTable;
-                //dataGridView1.Columns["id"].Visible = false;
 
 
             }
@@ -59,7 +58,6 @@ namespace RestaurantManagement
                 using (SqlCommand insertCmd = new SqlCommand(insertQuery, connect))
                 {
                     insertCmd.Parameters.AddWithValue("@cat", txtCategory.Text.Trim());
-                    //insertCmd.Parameters.AddWithValue("@date", DateTime.Now.Date);
 
                     insertCmd.ExecuteNonQuery();
                     loadData();
@@ -80,7 +78,6 @@ namespace RestaurantManagement
 
 
 
-        // Check if the connection is valid and open it if necessary
         public bool checkConnection()
         {
     
@@ -123,10 +120,8 @@ namespace RestaurantManagement
         {
             try
             {
-                // Ensure a row is selected
                 if (dataGridView1.SelectedRows.Count > 0)
                 {
-                    // Get the CategoryId from the selected row
                     int categoryId = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells["id"].Value);
 
                     connect.Open();
@@ -142,7 +137,7 @@ namespace RestaurantManagement
 
                         if (rowsAffected > 0)
                         {
-                            loadData(); // Refresh the DataGridView
+                            loadData();                         
                             MessageBox.Show("Category updated successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             txtCategory.Clear();
                         }
@@ -171,17 +166,13 @@ namespace RestaurantManagement
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            // Ensure the clicked cell is valid (not the header row)
             if (e.RowIndex >= 0)
             {
-                // Clear all existing selections
                 dataGridView1.ClearSelection();
 
-                // Select and highlight the clicked row
                 DataGridViewRow selectedRow = dataGridView1.Rows[e.RowIndex];
                 selectedRow.Selected = true;
 
-                // Optionally, display a value from the selected row in a TextBox
                 txtCategory.Text = selectedRow.Cells[1].Value?.ToString();
             }
         }
@@ -189,10 +180,8 @@ namespace RestaurantManagement
         {
             try
             {
-                // Ensure a row is selected
                 if (dataGridView1.SelectedRows.Count > 0)
                 {
-                    // Get the CategoryId from the selected row
                     int categoryId = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells["id"].Value);
 
                     connect.Open();
@@ -206,7 +195,7 @@ namespace RestaurantManagement
 
                         if (rowsAffected > 0)
                         {
-                            loadData(); // Refresh the DataGridView
+                            loadData();                          
                             MessageBox.Show("Category remove successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             txtCategory.Clear();
                         }

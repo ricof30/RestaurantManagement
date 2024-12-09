@@ -24,7 +24,6 @@ namespace RestaurantManagement
         {
             try
             {
-                // SQL query with JOIN to get username and foodname
                 string query = @"
             SELECT 
                 o.OrderId,
@@ -32,7 +31,7 @@ namespace RestaurantManagement
                 u.username AS CustomerName,      -- Display username
                 f.foodname AS FoodName,          -- Display foodname
                 o.Quantity,
-                o.TotalAmount
+                (o.Quantity * f.price) AS TotalAmount
             FROM 
                 Orders o
             INNER JOIN 
@@ -44,10 +43,8 @@ namespace RestaurantManagement
                 DataTable dataTable = new DataTable();
                 adapter.Fill(dataTable);
 
-                // Set the DataGridView's data source
                 dataGridView1.DataSource = dataTable;
 
-                // Optional: Change font color for the DataGridView
                 dataGridView1.DefaultCellStyle.ForeColor = Color.Black;
             }
             catch (Exception ex)

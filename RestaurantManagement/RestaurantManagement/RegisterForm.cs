@@ -35,7 +35,6 @@ namespace RestaurantManagement
         }
         private void Login_User_Click(object sender, EventArgs e)
         {
-            // Check for empty fields
            
 
             if (txtUsername.Text == "" || txtPassword.Text == "" || txtConfirmPassword.Text == "")
@@ -47,13 +46,11 @@ namespace RestaurantManagement
 
             try
             {
-                // Open the connection if it's not already open
                 if (connect.State == ConnectionState.Closed)
                 {
                     connect.Open();
                 }
 
-                // Check if username is already taken
                 string selectData = "SELECT * FROM Users WHERE username = @usern";
                 using (SqlCommand cmd = new SqlCommand(selectData, connect))
                 {
@@ -63,14 +60,12 @@ namespace RestaurantManagement
                     DataTable table = new DataTable();
                     adapter.Fill(table);
 
-                    // Username already exists
                     if (table.Rows.Count > 0)
                     {
                         MessageBox.Show(txtUsername.Text.Trim() + " is already taken", "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
 
-                    // Password validation
                     if (txtPassword.Text.Length < 8)
                     {
                         MessageBox.Show("Invalid Password, at least 8 characters needed", "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -83,20 +78,17 @@ namespace RestaurantManagement
                         return;
                     }
 
-                    // Insert new user
                     
                     string insertData = "INSERT INTO users(username, password, role) VALUES(@usern, @pass, @role)";
                     using (SqlCommand insertID = new SqlCommand(insertData, connect))
                     {
                         insertID.Parameters.AddWithValue("@usern", txtUsername.Text.Trim());
                         insertID.Parameters.AddWithValue("@pass", txtPassword.Text.Trim());
-                        insertID.Parameters.AddWithValue("@role", "Admin");
-                        //insertID.Parameters.AddWithValue("@status", "Approval");
+                        insertID.Parameters.AddWithValue("@role", "User");
 
                         insertID.ExecuteNonQuery();
                         MessageBox.Show("Registered Successfully", "Information Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                        // Show login form and hide the current form
                         LoginForm loginForm = new LoginForm();
                         loginForm.Show();
                         this.Hide();
@@ -109,7 +101,6 @@ namespace RestaurantManagement
             }
             finally
             {
-                // Close the connection in the finally block to ensure it gets closed even if an error occurs
                 if (connect.State == ConnectionState.Open)
                 {
                     connect.Close();

@@ -146,7 +146,7 @@ namespace RestaurantManagement
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-
+            ShowAdminForm();
         }
 
         private void mainpanel_Paint(object sender, PaintEventArgs e)

@@ -35,20 +35,20 @@
             this.lblPrice = new System.Windows.Forms.Label();
             this.cbCategory = new System.Windows.Forms.ComboBox();
             this.txtPrice = new System.Windows.Forms.TextBox();
-            this.lblDescrip = new System.Windows.Forms.Label();
-            this.txtDescription = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.btnAdd = new System.Windows.Forms.Button();
             this.btnEdit = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
             this.guna2CustomGradientPanel1 = new Guna.UI2.WinForms.Guna2CustomGradientPanel();
-            this.txtImage = new System.Windows.Forms.TextBox();
             this.btnUploadImage = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.pictureBox = new System.Windows.Forms.PictureBox();
+            this.btnClear = new System.Windows.Forms.Button();
             this.guna2CustomGradientPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -77,6 +77,7 @@
             // 
             // txtFoodName
             // 
+            this.txtFoodName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtFoodName.Location = new System.Drawing.Point(100, 70);
             this.txtFoodName.Multiline = true;
             this.txtFoodName.Name = "txtFoodName";
@@ -108,6 +109,7 @@
             // 
             // cbCategory
             // 
+            this.cbCategory.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbCategory.FormattingEnabled = true;
             this.cbCategory.Location = new System.Drawing.Point(100, 126);
             this.cbCategory.Name = "cbCategory";
@@ -117,31 +119,12 @@
             // 
             // txtPrice
             // 
+            this.txtPrice.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtPrice.Location = new System.Drawing.Point(100, 172);
             this.txtPrice.Multiline = true;
             this.txtPrice.Name = "txtPrice";
             this.txtPrice.Size = new System.Drawing.Size(190, 29);
             this.txtPrice.TabIndex = 10;
-            // 
-            // lblDescrip
-            // 
-            this.lblDescrip.AutoSize = true;
-            this.lblDescrip.BackColor = System.Drawing.Color.White;
-            this.lblDescrip.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDescrip.Location = new System.Drawing.Point(7, 242);
-            this.lblDescrip.Name = "lblDescrip";
-            this.lblDescrip.Size = new System.Drawing.Size(87, 18);
-            this.lblDescrip.TabIndex = 5;
-            this.lblDescrip.Text = "Description:";
-            // 
-            // txtDescription
-            // 
-            this.txtDescription.Location = new System.Drawing.Point(100, 231);
-            this.txtDescription.Multiline = true;
-            this.txtDescription.Name = "txtDescription";
-            this.txtDescription.Size = new System.Drawing.Size(190, 29);
-            this.txtDescription.TabIndex = 3;
-            this.txtDescription.TextChanged += new System.EventHandler(this.txtDescrip_TextChanged);
             // 
             // label5
             // 
@@ -162,7 +145,7 @@
             this.btnAdd.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnAdd.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAdd.ForeColor = System.Drawing.Color.White;
-            this.btnAdd.Location = new System.Drawing.Point(26, 384);
+            this.btnAdd.Location = new System.Drawing.Point(3, 384);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(68, 35);
             this.btnAdd.TabIndex = 13;
@@ -172,10 +155,11 @@
             // 
             // btnEdit
             // 
-            this.btnEdit.BackColor = System.Drawing.Color.CornflowerBlue;
+            this.btnEdit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
             this.btnEdit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnEdit.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnEdit.Location = new System.Drawing.Point(107, 384);
+            this.btnEdit.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.btnEdit.Location = new System.Drawing.Point(78, 384);
             this.btnEdit.Name = "btnEdit";
             this.btnEdit.Size = new System.Drawing.Size(75, 35);
             this.btnEdit.TabIndex = 14;
@@ -187,7 +171,8 @@
             // 
             this.btnDelete.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.btnDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnDelete.Location = new System.Drawing.Point(205, 384);
+            this.btnDelete.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.btnDelete.Location = new System.Drawing.Point(161, 384);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(75, 35);
             this.btnDelete.TabIndex = 15;
@@ -197,15 +182,14 @@
             // 
             // guna2CustomGradientPanel1
             // 
-            this.guna2CustomGradientPanel1.Controls.Add(this.txtImage);
+            this.guna2CustomGradientPanel1.Controls.Add(this.btnClear);
+            this.guna2CustomGradientPanel1.Controls.Add(this.pictureBox);
             this.guna2CustomGradientPanel1.Controls.Add(this.btnUploadImage);
             this.guna2CustomGradientPanel1.Controls.Add(this.btnDelete);
             this.guna2CustomGradientPanel1.Controls.Add(this.txtFoodName);
             this.guna2CustomGradientPanel1.Controls.Add(this.btnEdit);
             this.guna2CustomGradientPanel1.Controls.Add(this.btnAdd);
             this.guna2CustomGradientPanel1.Controls.Add(this.label5);
-            this.guna2CustomGradientPanel1.Controls.Add(this.txtDescription);
-            this.guna2CustomGradientPanel1.Controls.Add(this.lblDescrip);
             this.guna2CustomGradientPanel1.Controls.Add(this.txtPrice);
             this.guna2CustomGradientPanel1.Controls.Add(this.cbCategory);
             this.guna2CustomGradientPanel1.Controls.Add(this.lblPrice);
@@ -217,17 +201,9 @@
             this.guna2CustomGradientPanel1.TabIndex = 12;
             this.guna2CustomGradientPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.guna2CustomGradientPanel1_Paint);
             // 
-            // txtImage
-            // 
-            this.txtImage.Location = new System.Drawing.Point(100, 291);
-            this.txtImage.Multiline = true;
-            this.txtImage.Name = "txtImage";
-            this.txtImage.Size = new System.Drawing.Size(190, 29);
-            this.txtImage.TabIndex = 16;
-            // 
             // btnUploadImage
             // 
-            this.btnUploadImage.Location = new System.Drawing.Point(10, 274);
+            this.btnUploadImage.Location = new System.Drawing.Point(10, 235);
             this.btnUploadImage.Name = "btnUploadImage";
             this.btnUploadImage.Size = new System.Drawing.Size(75, 46);
             this.btnUploadImage.TabIndex = 14;
@@ -262,6 +238,29 @@
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
+            // pictureBox
+            // 
+            this.pictureBox.BackColor = System.Drawing.Color.White;
+            this.pictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pictureBox.Location = new System.Drawing.Point(131, 230);
+            this.pictureBox.Name = "pictureBox";
+            this.pictureBox.Size = new System.Drawing.Size(93, 66);
+            this.pictureBox.TabIndex = 16;
+            this.pictureBox.TabStop = false;
+            // 
+            // btnClear
+            // 
+            this.btnClear.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.btnClear.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnClear.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.btnClear.Location = new System.Drawing.Point(246, 385);
+            this.btnClear.Name = "btnClear";
+            this.btnClear.Size = new System.Drawing.Size(75, 35);
+            this.btnClear.TabIndex = 17;
+            this.btnClear.Text = "Clear";
+            this.btnClear.UseVisualStyleBackColor = false;
+            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
+            // 
             // adminFoodForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -279,6 +278,7 @@
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -291,17 +291,16 @@
         private System.Windows.Forms.Label lblPrice;
         private System.Windows.Forms.ComboBox cbCategory;
         private System.Windows.Forms.TextBox txtPrice;
-        private System.Windows.Forms.Label lblDescrip;
-        private System.Windows.Forms.TextBox txtDescription;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button btnAdd;
         private System.Windows.Forms.Button btnEdit;
         private System.Windows.Forms.Button btnDelete;
         private Guna.UI2.WinForms.Guna2CustomGradientPanel guna2CustomGradientPanel1;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.TextBox txtImage;
         private System.Windows.Forms.Button btnUploadImage;
         private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.PictureBox pictureBox;
+        private System.Windows.Forms.Button btnClear;
     }
 
 

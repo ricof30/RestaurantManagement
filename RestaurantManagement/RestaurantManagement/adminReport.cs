@@ -19,7 +19,6 @@ namespace RestaurantManagement
         {
             try
             {
-                // Query to fetch daily sales data for all dates
                 string query = @"
             SELECT 
                 CONVERT(DATE, o.OrderDate) AS OrderDate,   -- Group by day (removes time part)
@@ -33,27 +32,22 @@ namespace RestaurantManagement
             ORDER BY OrderDate DESC;                     -- Orders by most recent date
         ";
 
-                // Open the connection
                 connect.Open();
 
-                // Execute the query and load data into DataTable
                 SqlDataAdapter adapter = new SqlDataAdapter(query, connect);
                 DataTable dataTable = new DataTable();
                 adapter.Fill(dataTable);
 
-                // Format the DataGridView and load data
                 dataGridView1.DefaultCellStyle.ForeColor = Color.Black;
                 dataGridView1.DataSource = dataTable;
                 dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             }
             catch (Exception ex)
             {
-                // Show error message if something goes wrong
                 MessageBox.Show($"Error displaying Sales Report: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {
-                // Ensure the connection is closed after the operation
                 if (connect.State == ConnectionState.Open)
                 {
                     connect.Close();
@@ -66,7 +60,6 @@ namespace RestaurantManagement
         {
             try
             {
-                // Query to fetch monthly sales data for all months
                 string query = @"
             SELECT 
                 YEAR(o.OrderDate) AS OrderYear, 
@@ -81,27 +74,22 @@ namespace RestaurantManagement
             ORDER BY OrderYear DESC, OrderMonth DESC;
         ";
 
-                // Open the connection
                 connect.Open();
 
-                // Execute the query and load data into DataTable
                 SqlDataAdapter adapter = new SqlDataAdapter(query, connect);
                 DataTable dataTable = new DataTable();
                 adapter.Fill(dataTable);
 
-                // Format the DataGridView and load data
                 dataGridView2.DefaultCellStyle.ForeColor = Color.Black;
                 dataGridView2.DataSource = dataTable;
                 dataGridView2.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             }
             catch (Exception ex)
             {
-                // Show error message if something goes wrong
                 MessageBox.Show($"Error displaying Sales Report: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {
-                // Ensure the connection is closed after the operation
                 if (connect.State == ConnectionState.Open)
                 {
                     connect.Close();
@@ -110,7 +98,6 @@ namespace RestaurantManagement
         }
 
 
-        // Handle the click event on the DataGridView
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             loadDailySales();

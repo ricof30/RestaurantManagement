@@ -63,6 +63,26 @@ namespace RestaurantManagement.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Cheese_Sandwich {
+            get {
+                object obj = ResourceManager.GetObject("Cheese Sandwich", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Chicken_Meatballs {
+            get {
+                object obj = ResourceManager.GetObject("Chicken Meatballs", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap COSTUMER {
             get {
                 object obj = ResourceManager.GetObject("COSTUMER", resourceCulture);
@@ -153,9 +173,29 @@ namespace RestaurantManagement.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Smoked_Salmon {
+            get {
+                object obj = ResourceManager.GetObject("Smoked Salmon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap tttt {
             get {
                 object obj = ResourceManager.GetObject("tttt", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Turkey_Meatballs {
+            get {
+                object obj = ResourceManager.GetObject("Turkey Meatballs", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -77,21 +78,17 @@ namespace RestaurantManagement
         {
             try
             {
-                // Query to fetch category Id and name
                 string query = "SELECT Id, category FROM Categories";
                 DataTable dt = new DataTable();
 
                 using (SqlDataAdapter adapter = new SqlDataAdapter(query, connect))
                 {
-                    adapter.Fill(dt); // Fill the DataTable with category data
-                }
+                    adapter.Fill(dt);                }
 
-                // Bind DataTable to ComboBox
-                cbCategory.DataSource = dt;             // Set the data source of ComboBox
-                cbCategory.DisplayMember = "category"; // Display category names
-                cbCategory.ValueMember = "Id";         // Use Id as the value
-                cbCategory.SelectedIndex = -1;         // Default to no selection
-            }
+                cbCategory.DataSource = dt;              
+                cbCategory.DisplayMember = "category";           
+                cbCategory.ValueMember = "Id";             
+                cbCategory.SelectedIndex = -1;            }
             catch (Exception ex)
             {
                 MessageBox.Show($"Error loading categories: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -102,75 +99,101 @@ namespace RestaurantManagement
         {
             try
             {
-                string query = "SELECT * FROM Food";
+                string query = @"
+                        SELECT 
+                            f.Id, 
+                            f.foodname, 
+                            c.category AS CategoryName, 
+                            f.price, 
+                            f.image
+                        FROM 
+                            Food f
+                        INNER JOIN 
+                            Categories c ON f.category_id = c.Id";
+
                 SqlDataAdapter adapter = new SqlDataAdapter(query, connect);
                 DataTable dataTable = new DataTable();
                 adapter.Fill(dataTable);
 
+                dataGridView1.DataSource = null;
+                dataGridView1.Rows.Clear();
+                dataGridView1.Columns.Clear();
+
+                dataGridView1.Columns.Add("Id", "ID");
+                dataGridView1.Columns.Add("foodname", "Food Name");
+                dataGridView1.Columns.Add("CategoryName", "Category");
+                dataGridView1.Columns.Add("price", "Price");
+              
+
+                DataGridViewImageColumn imageColumn = new DataGridViewImageColumn
+                {
+                    Name = "Image",
+                    HeaderText = "Image",
+                    ImageLayout = DataGridViewImageCellLayout.Zoom
+                };
+                dataGridView1.Columns.Add(imageColumn);
+
+                foreach (DataRow row in dataTable.Rows)
+                {
+                    string imagePath = row["image"].ToString();
+                    Image image = null;
+
+                    if (!string.IsNullOrEmpty(imagePath) && File.Exists(imagePath))
+                    {
+                        byte[] imageBytes = File.ReadAllBytes(imagePath);
+                        image = Image.FromStream(new MemoryStream(imageBytes));
+                    }
+
+                    dataGridView1.Rows.Add(
+                        row["Id"].ToString(),
+                        row["foodname"].ToString(),
+                        row["CategoryName"].ToString(),                      
+                        row["price"].ToString(),
+                        image
+                    );
+                }
 
                 dataGridView1.DefaultCellStyle.ForeColor = Color.Black;
-
-                dataGridView1.DataSource = dataTable;
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Error displaying Food: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                if (connect.State == ConnectionState.Open)
+                {
+                    connect.Close();
+                }
             }
         }
 
 
         private void SetUpDataGridView()
         {
-            // Add a column for user input (e.g., Notes)
             DataGridViewTextBoxColumn inputColumn = new DataGridViewTextBoxColumn();
             inputColumn.Name = "InputColumn";
             inputColumn.HeaderText = "Notes";
             dataGridView1.Columns.Add(inputColumn);
 
-            // Add a column for the Edit button
             DataGridViewButtonColumn editButtonColumn = new DataGridViewButtonColumn();
             editButtonColumn.Name = "EditButton";
             editButtonColumn.HeaderText = "Edit";
             editButtonColumn.Text = "Edit";
-            editButtonColumn.UseColumnTextForButtonValue = true; // Ensure it's a button
+            editButtonColumn.UseColumnTextForButtonValue = true;          
             dataGridView1.Columns.Add(editButtonColumn);
 
-            // Add a column for the Delete button
             DataGridViewButtonColumn deleteButtonColumn = new DataGridViewButtonColumn();
             deleteButtonColumn.Name = "DeleteButton";
             deleteButtonColumn.HeaderText = "Delete";
             deleteButtonColumn.Text = "Delete";
-            deleteButtonColumn.UseColumnTextForButtonValue = true; // Ensure it's a button
+            deleteButtonColumn.UseColumnTextForButtonValue = true;          
             dataGridView1.Columns.Add(deleteButtonColumn);
         }
 
         private void dataGridView1_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
         {
-            // Ensure we are clicking on a button (Edit or Delete)
-            if (e.RowIndex >= 0)
-            {
-                // Clear all existing selections
-                dataGridView1.ClearSelection();
-
-                // Select and highlight the clicked row
-                DataGridViewRow selectedRow = dataGridView1.Rows[e.RowIndex];
-                selectedRow.Selected = true;
-
-                // Optionally, display a value from the selected row in a TextBox
-                txtFoodName.Text = selectedRow.Cells[1].Value?.ToString();
-                txtImage.Text = selectedRow.Cells[2].Value?.ToString();
-                if (int.TryParse(selectedRow.Cells[3].Value?.ToString(), out int categoryId))
-                {
-                    cbCategory.SelectedValue = categoryId; // Set the ComboBox using category_id
-                }
-                else
-                {
-                    cbCategory.SelectedIndex = -1; // Clear selection if invalid
-                }
-                txtPrice.Text = selectedRow.Cells[4].Value?.ToString();
-                txtDescription.Text = selectedRow.Cells[5].Value?.ToString();
-
-            }
+           
         }
 
         private void adminFoodForm_Load(object sender, EventArgs e)
@@ -179,7 +202,6 @@ namespace RestaurantManagement
             btnUploadImage.ForeColor = Color.Black;
             lblcategory.ForeColor = Color.Black;
             lblPrice.ForeColor = Color.Black;
-            lblDescrip.ForeColor = Color.Black;
             label1.ForeColor = Color.Black;
             label5.ForeColor = Color.Black;
 
@@ -190,36 +212,39 @@ namespace RestaurantManagement
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
-        { 
-            if (txtFoodName.Text == "" || cbCategory.SelectedIndex == -1 || txtPrice.Text == "" || txtDescription.Text == "")
+        {
+            if (string.IsNullOrWhiteSpace(txtFoodName.Text) ||
+                cbCategory.SelectedIndex == -1 ||
+                string.IsNullOrWhiteSpace(txtPrice.Text) ||
+                string.IsNullOrWhiteSpace(selectedImagePath))
             {
-                MessageBox.Show("Please fill all the empty fields", "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Please fill all fields and upload an image.", "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
             try
             {
                 connect.Open();
-                string insertQuery = "INSERT INTO Food (foodname, image, category_id, price, description) VALUES (@foodname, @image, @category_id, @price, @description)";
+                string insertQuery = "INSERT INTO Food (foodname, image, category_id, price) VALUES (@foodname, @image, @category_id, @price)";
                 int categoryId = Convert.ToInt32(cbCategory.SelectedValue);
+
                 using (SqlCommand insertCmd = new SqlCommand(insertQuery, connect))
                 {
                     insertCmd.Parameters.AddWithValue("@foodname", txtFoodName.Text.Trim());
-                    insertCmd.Parameters.AddWithValue("@image", txtImage.Text.Trim());
+                    insertCmd.Parameters.AddWithValue("@image", selectedImagePath);
                     insertCmd.Parameters.AddWithValue("@category_id", categoryId);
                     insertCmd.Parameters.AddWithValue("@price", txtPrice.Text.Trim());
-                    insertCmd.Parameters.AddWithValue("@description", txtDescription.Text.Trim());
-                    
 
                     insertCmd.ExecuteNonQuery();
                     loadData();
 
                     MessageBox.Show("Food added successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
                     txtFoodName.Clear();
-                    txtImage.Clear();
                     cbCategory.SelectedIndex = -1;
                     txtPrice.Clear();
-                    txtDescription.Clear();
+                    pictureBox.Image = null;
+                    selectedImagePath = string.Empty;
                 }
             }
             catch (Exception ex)
@@ -233,6 +258,8 @@ namespace RestaurantManagement
         }
 
 
+        private string selectedImagePath = string.Empty;
+
         private void btnUploadImage_Click_1(object sender, EventArgs e)
         {
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
@@ -242,46 +269,53 @@ namespace RestaurantManagement
 
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
-                    // Load the selected image into the PictureBox
-                    txtImage.Text = openFileDialog.FileName;
+                    selectedImagePath = openFileDialog.FileName;
+
+                    pictureBox.Image = Image.FromFile(selectedImagePath);
+                    pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
                 }
             }
-
         }
 
         private void btnEdit_Click(object sender, EventArgs e)
         {
             try
             {
-                // Ensure a row is selected
                 if (dataGridView1.SelectedRows.Count > 0)
                 {
-                    // Get the CategoryId from the selected row
-                    int categoryId = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells["id"].Value);
+                    int foodId = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells["id"].Value);
 
                     connect.Open();
-                    string updateQuery = "UPDATE Food SET foodname = @foodname, image = @image, category_id = @category_id, price = @price, description = @description  WHERE id = @id";
+
+                    bool isImageUpdated = pictureBox.Image != null && !string.IsNullOrEmpty(selectedImagePath);
+
+                    string updateQuery = "UPDATE Food SET foodname = @foodname, category_id = @category_id, price = @price" +
+                                         (isImageUpdated ? ", image = @image" : "") +
+                                         " WHERE id = @id";
 
                     using (SqlCommand updateCmd = new SqlCommand(updateQuery, connect))
                     {
                         updateCmd.Parameters.AddWithValue("@foodname", txtFoodName.Text.Trim());
-                        updateCmd.Parameters.AddWithValue("@image", txtImage.Text.Trim());
                         updateCmd.Parameters.AddWithValue("@category_id", cbCategory.SelectedValue);
                         updateCmd.Parameters.AddWithValue("@price", txtPrice.Text.Trim());
-                        updateCmd.Parameters.AddWithValue("@description", txtDescription.Text.Trim());
-                        updateCmd.Parameters.AddWithValue("@id", categoryId);
+                        updateCmd.Parameters.AddWithValue("@id", foodId);
+
+                        if (isImageUpdated)
+                        {
+                            updateCmd.Parameters.AddWithValue("@image", selectedImagePath);
+                        }
 
                         int rowsAffected = updateCmd.ExecuteNonQuery();
 
                         if (rowsAffected > 0)
                         {
-                            loadData(); // Refresh the DataGridView
+                            loadData();
                             MessageBox.Show("Food updated successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             txtFoodName.Clear();
-                            txtImage.Clear();
                             cbCategory.SelectedIndex = -1;
                             txtPrice.Clear();
-                            txtDescription.Clear();
+                            pictureBox.Image = null;
+                            selectedImagePath = string.Empty;
                         }
                         else
                         {
@@ -308,10 +342,8 @@ namespace RestaurantManagement
         {
             try
             {
-                // Ensure a row is selected
                 if (dataGridView1.SelectedRows.Count > 0)
                 {
-                    // Get the CategoryId from the selected row
                     int categoryId = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells["id"].Value);
 
                     connect.Open();
@@ -325,13 +357,12 @@ namespace RestaurantManagement
 
                         if (rowsAffected > 0)
                         {
-                            loadData(); // Refresh the DataGridView
+                            loadData();
                             MessageBox.Show("Food delete successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             txtFoodName.Clear();
-                            txtImage.Clear();
+                            pictureBox.Image = null;
                             cbCategory.SelectedIndex = -1;
                             txtPrice.Clear();
-                            txtDescription.Clear();
                         }
                         else
                         {
@@ -352,40 +383,45 @@ namespace RestaurantManagement
             {
                 connect.Close();
             }
-       
+
         }
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0)
             {
-                // Clear all existing selections
                 dataGridView1.ClearSelection();
 
-                // Select and highlight the clicked row
                 DataGridViewRow selectedRow = dataGridView1.Rows[e.RowIndex];
                 selectedRow.Selected = true;
 
-                // Optionally, display a value from the selected row in a TextBox
                 txtFoodName.Text = selectedRow.Cells[1].Value?.ToString();
-                txtImage.Text = selectedRow.Cells[2].Value?.ToString();
-                if (int.TryParse(selectedRow.Cells[3].Value?.ToString(), out int categoryId))
+                cbCategory.Text = selectedRow.Cells[2].Value?.ToString();
+                txtPrice.Text = selectedRow.Cells[3].Value?.ToString();
+
+                if (selectedRow.Cells[4].Value is Bitmap bitmapImage)
                 {
-                    cbCategory.SelectedValue = categoryId; // Set the ComboBox using category_id
+                    pictureBox.Image = bitmapImage;
+                    pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
                 }
                 else
                 {
-                    cbCategory.SelectedIndex = -1; // Clear selection if invalid
+                    pictureBox.Image = null;
                 }
-                txtPrice.Text = selectedRow.Cells[4].Value?.ToString();
-                txtDescription.Text = selectedRow.Cells[5].Value?.ToString();
-
             }
         }
 
         private void guna2CustomGradientPanel1_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+
+        private void btnClear_Click(object sender, EventArgs e)
+        {
+            txtFoodName.Clear();
+            pictureBox.Image = null;
+            cbCategory.SelectedIndex = -1;
+            txtPrice.Clear();
         }
     }
 }

@@ -16,15 +16,14 @@ using RestaurantManagement;
 
 namespace RestaurantManagement
 {
+    
 
     public partial class LoginForm : Form
     {
-        //private SqlConnection connect;
-        
+        private string username;
         public LoginForm()
         {
             InitializeComponent();
-            //connect = DbHelper.GetConnection();
             InvalidU.Hide();
             InvalidP.Hide();
         }
@@ -81,10 +80,8 @@ namespace RestaurantManagement
 
                         using (SqlCommand cmd = new SqlCommand(selectData, connect))
                         {
-                            // Ensure to use specific types
                             cmd.Parameters.Add("@usern", SqlDbType.VarChar).Value = txtLoginUsername.Text.Trim();
-                            cmd.Parameters.Add("@pass", SqlDbType.VarChar).Value = txtLoginPassword.Text.Trim(); // Hash password if stored in the database
-
+                            cmd.Parameters.Add("@pass", SqlDbType.VarChar).Value = txtLoginPassword.Text.Trim();
                             SqlDataAdapter adapter = new SqlDataAdapter(cmd);
                             DataTable table = new DataTable();
                             adapter.Fill(table);
@@ -121,7 +118,6 @@ namespace RestaurantManagement
 
         private void Login_User_Click_1(object sender, EventArgs e)
         {
-            // Validate empty fields
             if (string.IsNullOrWhiteSpace(txtLoginUsername.Text))
             {
                 MessageBox.Show("Please fill the username field", "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -137,42 +133,36 @@ namespace RestaurantManagement
             {
                 try
                 {
-                    // SQL query to validate the user
                     string selectData = "SELECT role FROM users WHERE username = @usern AND password = @pass";
 
                     using (SqlCommand cmd = new SqlCommand(selectData, connect))
                     {
-                        // Add parameters to prevent SQL injection
                         cmd.Parameters.Add("@usern", SqlDbType.VarChar).Value = txtLoginUsername.Text.Trim();
-                        cmd.Parameters.Add("@pass", SqlDbType.VarChar).Value = txtLoginPassword.Text.Trim(); // Use hashed password in production
-
+                        cmd.Parameters.Add("@pass", SqlDbType.VarChar).Value = txtLoginPassword.Text.Trim();
                         connect.Open();
                         using (SqlDataReader reader = cmd.ExecuteReader())
                         {
-                            if (reader.Read()) // Check if a matching user is found
-                            {
+                            if (reader.Read())                            {
                                 string role = reader["role"].ToString();
 
                                 if (role == "Admin")
                                 {
-                                    MessageBox.Show("Login Successfully as Admin", "Information Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                    MessageBox.Show($"Login Successfully as {role}", "Information Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                                    // Open Admin Dashboard
                                     MainForm mForm = new MainForm();
                                     mForm.Show();
 
                                     this.Hide();
                                 }
-                                else
+                                else if(role == "User")
                                 {
                                     MessageBox.Show($"Login Successful! Redirecting to {role} Dashboard.", "Information Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                    Application.Exit();
 
-                                    // Open User Dashboard or another form as required
-                                    //UserForm uForm = new UserForm();
-                                    //uForm.Show();
+                                    username = txtLoginUsername.Text;
+                                    UserForm uForm = new UserForm(username);
+                                    uForm.Show();
 
-                                    //this.Hide();
+                                    this.Hide();
                                 }
                             }
                             else
