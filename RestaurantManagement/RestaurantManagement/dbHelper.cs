@@ -15,7 +15,8 @@ namespace RestaurantManagement
         // Method to get the connection string
         public static string GetConnectionString()
         {
-            return @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=D:\RestaurantManagement-main\RestaurantManagement-main\RestaurantManagement\RestaurantManagement\Database.mdf;Integrated Security=True";
+            return @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=D:\RestaurantManagement-main\RestaurantManagement-main\RestaurantManagement\RestaurantManagement\RestaurantDb.mdf;Integrated Security=True
+";
         }
 
 

@@ -29,12 +29,17 @@ namespace RestaurantManagement
 
         private void UserForm_Load(object sender, EventArgs e)
         {
-            LoadAppetizerData();            AppetizerForm appetizer = new AppetizerForm(username);
+            LoadAppetizerData();          
+            AppetizerForm appetizer = new AppetizerForm(username);
             ShowUserPanel.Controls.Clear();
             appetizer.TopLevel = false;
             ShowUserPanel.Controls.Add(appetizer);
             appetizer.Dock = DockStyle.Fill;
             appetizer.Show();
+            button2.BackColor = Color.Orange;
+            button4.BackColor = Color.Transparent;
+            button6.BackColor = Color.Transparent;
+            button7.BackColor = Color.Transparent;
         }
 
         private void LoadAppetizerData()
@@ -64,6 +69,10 @@ namespace RestaurantManagement
             ShowUserPanel.Controls.Add(appetizer);
             appetizer.Dock = DockStyle.Fill;
             appetizer.Show();
+            button2.BackColor = Color.Orange;
+            button4.BackColor = Color.Transparent;
+            button6.BackColor = Color.Transparent;
+            button7.BackColor = Color.Transparent;
         }
 
         private void panel5_Paint(object sender, PaintEventArgs e)
@@ -84,6 +93,10 @@ namespace RestaurantManagement
             ShowUserPanel.Controls.Add(ramen);
             ramen.Dock = DockStyle.Fill;
             ramen.Show();
+            button4.BackColor = Color.Orange;
+            button2.BackColor = Color.Transparent;
+            button6.BackColor = Color.Transparent;
+            button7.BackColor = Color.Transparent;
         }
 
         private void button6_Click(object sender, EventArgs e)
@@ -94,6 +107,10 @@ namespace RestaurantManagement
             ShowUserPanel.Controls.Add(drink);
             drink.Dock = DockStyle.Fill;
             drink.Show();
+            button6.BackColor = Color.Orange;
+            button2.BackColor = Color.Transparent;
+            button4.BackColor = Color.Transparent;
+            button7.BackColor = Color.Transparent;
         }
 
         private void button7_Click(object sender, EventArgs e)
@@ -104,6 +121,10 @@ namespace RestaurantManagement
             ShowUserPanel.Controls.Add(status);
             status.Dock = DockStyle.Fill;
             status.Show();
+            button2.BackColor = Color.Transparent;
+            button4.BackColor = Color.Transparent;
+            button6.BackColor = Color.Transparent;
+            button7.BackColor = Color.Orange;
         }
 
         private void button1_Click(object sender, EventArgs e)

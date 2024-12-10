@@ -99,11 +99,12 @@
             // 
             this.appetizerGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.appetizerGridView.Location = new System.Drawing.Point(508, 159);
-            this.appetizerGridView.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.appetizerGridView.Margin = new System.Windows.Forms.Padding(4);
             this.appetizerGridView.Name = "appetizerGridView";
             this.appetizerGridView.RowHeadersWidth = 51;
             this.appetizerGridView.Size = new System.Drawing.Size(320, 185);
             this.appetizerGridView.TabIndex = 39;
+            this.appetizerGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.appetizerGridView_CellContentClick);
             // 
             // lblUsername
             // 
@@ -124,11 +125,12 @@
             this.label5.Size = new System.Drawing.Size(196, 25);
             this.label5.TabIndex = 37;
             this.label5.Text = "Customer’s Name :";
+            this.label5.Click += new System.EventHandler(this.label5_Click);
             // 
             // flowLayoutPanel1
             // 
             this.flowLayoutPanel1.Location = new System.Drawing.Point(11, 15);
-            this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(4);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Size = new System.Drawing.Size(485, 511);
             this.flowLayoutPanel1.TabIndex = 36;
@@ -160,7 +162,7 @@
             this.Controls.Add(this.label5);
             this.Controls.Add(this.flowLayoutPanel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "RamenForm";
             this.Text = "RamenForm";
             this.Load += new System.EventHandler(this.RamenForm_Load);

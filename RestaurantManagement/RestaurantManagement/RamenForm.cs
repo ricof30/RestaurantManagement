@@ -26,6 +26,15 @@ namespace RestaurantManagement
 
         private void RamenForm_Load(object sender, EventArgs e)
         {
+            if (connect.State == ConnectionState.Open)
+            {
+                connect.Close();
+            }
+            else
+            {
+                connect.Open();
+
+            }
             LoadMenu();
             LoadAppetizerData();
             getTotalItem();
@@ -35,11 +44,10 @@ namespace RestaurantManagement
 
         private void LoadAppetizerData()
         {
+            connect.Close();
+            int userId = GetUserId(connect, username);
             try
             {
-                int userId = GetUserId(connect, username);
-
-                // Parameterized query for filtering by category and user
                 string query = @"
                 SELECT 
                     Orders.OrderId,
@@ -52,12 +60,12 @@ namespace RestaurantManagement
                 FROM Orders
                 INNER JOIN Food ON Orders.FoodId = Food.Id
                 INNER JOIN Categories ON Food.category_id = Categories.Id
-                WHERE Categories.category = @Category
-                AND Orders.UserId = @UserId";
+                WHERE Orders.UserId = @UserId
+                AND Categories.category = 'Ramen'";
 
                 using (SqlCommand cmd = new SqlCommand(query, connect))
                 {
-                    cmd.Parameters.AddWithValue("@Category", "Ramen");
+                    // Add parameter
                     cmd.Parameters.AddWithValue("@UserId", userId);
 
                     using (SqlDataAdapter adapter = new SqlDataAdapter(cmd))
@@ -65,7 +73,7 @@ namespace RestaurantManagement
                         DataTable table = new DataTable();
                         adapter.Fill(table);
 
-                        // Bind data to the DataGridView
+                        // Bind the data to the DataGridView
                         appetizerGridView.DataSource = table;
                     }
                 }
@@ -81,12 +89,13 @@ namespace RestaurantManagement
 
                 appetizerGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
                 appetizerGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-                appetizerGridView.RowHeadersVisible = false;           
-                appetizerGridView.ReadOnly = true;               
+                appetizerGridView.RowHeadersVisible = false;
+                appetizerGridView.ReadOnly = true;
                 appetizerGridView.AllowUserToResizeRows = false;
                 foreach (DataGridViewColumn column in appetizerGridView.Columns)
                 {
-                    column.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;                }
+                    column.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                }
 
                 appetizerGridView.Columns[appetizerGridView.Columns.Count - 1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             }
@@ -95,6 +104,7 @@ namespace RestaurantManagement
                 MessageBox.Show("Error loading appetizer data: " + ex.Message);
             }
         }
+
 
 
 
@@ -123,7 +133,8 @@ namespace RestaurantManagement
                 {
                     Size = new Size(150, 200),
                     BorderStyle = BorderStyle.FixedSingle,
-                    Margin = new Padding(10)                };
+                    Margin = new Padding(10)
+                };
 
                 PictureBox pictureBox = new PictureBox
                 {
@@ -169,10 +180,11 @@ namespace RestaurantManagement
 
         private void AddToOrder(string foodId, string foodName)
         {
+            connect.Close();
             try
             {
-                int userId = 1;
-                int quantityToAdd = 1;      
+                int userId = GetUserId(connect, username);
+                int quantityToAdd = 1;
                 decimal foodPrice = GetFoodPrice(foodId);
 
                 using (SqlConnection conn = DbHelper.GetConnection())
@@ -197,57 +209,60 @@ namespace RestaurantManagement
                                 int newQuantity = existingQuantity + quantityToAdd;
                                 decimal newTotal = newQuantity * foodPrice;
 
-                                reader.Close();                         
+                                reader.Close();
                                 UpdateOrder(conn, userId, foodId, newQuantity, newTotal, foodName);
                             }
                             else
                             {
-                                reader.Close();                           
+                                reader.Close();
                                 decimal totalAmount = quantityToAdd * foodPrice;
                                 InsertOrder(conn, userId, foodId, quantityToAdd, totalAmount, foodName);
                             }
                         }
                     }
 
-                    LoadAppetizerData();                  
-                    getTotalItem();                 
-                    getTotalPrice();                }
+
+                    LoadAppetizerData();
+                    getTotalItem();
+                    getTotalPrice();
+                }
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Error adding item to order: " + ex.Message);
             }
         }
-        public int GetUserId(SqlConnection conn, string username)
+        public int GetUserId(SqlConnection con, string username)
         {
             string query = @"SELECT id FROM Users WHERE username = @username";
 
-            using (SqlCommand cmd = new SqlCommand(query, conn))
+            using (SqlCommand cmd = new SqlCommand(query, con))
             {
-                connect.Open();
+                con.Open();
                 cmd.Parameters.AddWithValue("@username", username);
 
-                object result = cmd.ExecuteScalar();              
+                object result = cmd.ExecuteScalar();
                 if (result != null && int.TryParse(result.ToString(), out int userId))
                 {
-                    return userId;                }
+                    return userId;
+                }
                 else
                 {
-                    throw new Exception("User not found.");                }
+                    throw new Exception("User not found.");
+                }
             }
         }
 
 
 
-        private void InsertOrder(SqlConnection conn, int userId, string foodId, int quantity, decimal totalAmount, string foodName)
+
+      private void InsertOrder(SqlConnection conn, int userId, string foodId, int quantity, decimal totalAmount, string foodName)
         {
-            userId = GetUserId(conn, username);
             string insertQuery = @"INSERT INTO Orders (OrderDate, UserId, FoodId, Quantity, TotalAmount) 
                            VALUES (@OrderDate, @UserId, @FoodId, @Quantity, @TotalAmount)";
 
             using (SqlCommand cmd = new SqlCommand(insertQuery, conn))
             {
-
                 cmd.Parameters.AddWithValue("@OrderDate", DateTime.Now);
                 cmd.Parameters.AddWithValue("@UserId", userId);
                 cmd.Parameters.AddWithValue("@FoodId", foodId);
@@ -326,31 +341,73 @@ namespace RestaurantManagement
             }
         }
 
+        //private void getTotalItem()
+        //{
+        //    try
+        //    {
+        //        string query = @"
+        //SELECT SUM(Orders.Quantity) 
+        //FROM Orders
+        //INNER JOIN Food ON Orders.FoodId = Food.Id
+        //INNER JOIN Categories ON Food.category_id = Categories.Id
+        //WHERE Categories.category = 'Ramen'";
+
+        //        using (SqlConnection conn = DbHelper.GetConnection())
+        //        {
+        //            conn.Open();
+        //            using (SqlCommand cmd = new SqlCommand(query, conn))
+        //            {
+        //                object result = cmd.ExecuteScalar();
+
+        //                if (result != DBNull.Value && result != null)
+        //                {
+        //                    int totalItems = Convert.ToInt32(result);
+        //                    total.Text = $"{totalItems}";
+        //                }
+        //                else
+        //                {
+        //                    total.Text = "0";
+        //                }
+        //            }
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        MessageBox.Show("Error calculating total items for appetizers: " + ex.Message);
+        //    }
+        //}
         private void getTotalItem()
         {
+            connect.Close();
             try
             {
+                int userId = GetUserId(connect, username);
                 string query = @"
-        SELECT SUM(Orders.Quantity) 
-        FROM Orders
-        INNER JOIN Food ON Orders.FoodId = Food.Id
-        INNER JOIN Categories ON Food.category_id = Categories.Id
-        WHERE Categories.category = 'Ramen'";
+                SELECT SUM(Orders.Quantity) 
+                FROM Orders
+                INNER JOIN Food ON Orders.FoodId = Food.Id
+                INNER JOIN Categories ON Food.category_id = Categories.Id
+                WHERE Categories.category = 'Ramen' AND Orders.UserId = @UserId"; // Corrected query syntax
 
                 using (SqlConnection conn = DbHelper.GetConnection())
                 {
                     conn.Open();
                     using (SqlCommand cmd = new SqlCommand(query, conn))
                     {
+                        cmd.Parameters.AddWithValue("@UserId", userId); // Added UserId parameter
+
                         object result = cmd.ExecuteScalar();
 
                         if (result != DBNull.Value && result != null)
                         {
                             int totalItems = Convert.ToInt32(result);
-                            total.Text = $"{totalItems}";                        }
+                            total.Text = $"{totalItems}";
+                            conn.Close();
+                        }
                         else
                         {
-                            total.Text = "0";                        }
+                            total.Text = "0";
+                        }
                     }
                 }
             }
@@ -360,32 +417,73 @@ namespace RestaurantManagement
             }
         }
 
+        //private void getTotalPrice()
+        //{
+        //    try
+        //    {
+        //        string query = @"
+        //SELECT SUM(Orders.TotalAmount) 
+        //FROM Orders
+        //INNER JOIN Food ON Orders.FoodId = Food.Id
+        //INNER JOIN Categories ON Food.category_id = Categories.Id
+        //WHERE Categories.category = 'Ramen'";
 
+        //        using (SqlConnection conn = DbHelper.GetConnection())
+        //        {
+        //            conn.Open();
+        //            using (SqlCommand cmd = new SqlCommand(query, conn))
+        //            {
+        //                object result = cmd.ExecuteScalar();
+
+        //                if (result != DBNull.Value && result != null)
+        //                {
+        //                    decimal total = Convert.ToDecimal(result);
+        //                    totalPrice.Text = $"Php {total:F2}";
+        //                }
+        //                else
+        //                {
+        //                    totalPrice.Text = "Php 0.00";
+        //                }
+        //            }
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        MessageBox.Show("Error calculating total price for appetizers: " + ex.Message);
+        //    }
+        //}
         private void getTotalPrice()
         {
+            connect.Close();
             try
             {
+                int userId = GetUserId(connect, username);
                 string query = @"
-        SELECT SUM(Orders.TotalAmount) 
-        FROM Orders
-        INNER JOIN Food ON Orders.FoodId = Food.Id
-        INNER JOIN Categories ON Food.category_id = Categories.Id
-        WHERE Categories.category = 'Ramen'";
+                 SELECT SUM(Orders.TotalAmount) 
+                 FROM Orders
+                 INNER JOIN Food ON Orders.FoodId = Food.Id
+                 INNER JOIN Categories ON Food.category_id = Categories.Id
+                 WHERE Categories.category = 'Ramen' AND Orders.UserId = @UserId"; // Corrected query syntax
 
                 using (SqlConnection conn = DbHelper.GetConnection())
                 {
                     conn.Open();
                     using (SqlCommand cmd = new SqlCommand(query, conn))
                     {
+                        cmd.Parameters.AddWithValue("@UserId", userId); // Added UserId parameter
+
                         object result = cmd.ExecuteScalar();
 
                         if (result != DBNull.Value && result != null)
                         {
                             decimal total = Convert.ToDecimal(result);
-                            totalPrice.Text = $"Php {total:F2}";                        }
+                            totalPrice.Text = $"Php {total:F2}";
+                            conn.Close();
+                        }
                         else
                         {
-                            totalPrice.Text = "Php 0.00";                        }
+                            totalPrice.Text = "Php 0.00";
+                        }
                     }
                 }
             }
@@ -437,7 +535,7 @@ namespace RestaurantManagement
                         DeleteRowFromDatabase(idToDelete);
 
                         appetizerGridView.Rows.RemoveAt(selectedRowIndex);
-
+                        connect.Close();
                         MessageBox.Show("Item deleted successfully.");
                     }
                 }
@@ -446,11 +544,22 @@ namespace RestaurantManagement
                     MessageBox.Show("Please select a row to delete.");
                 }
 
-                getTotalItem();                getTotalPrice();            }
+                getTotalItem(); getTotalPrice();
+            }
             catch (Exception ex)
             {
                 MessageBox.Show("Error deleting item: " + ex.Message);
             }
+        }
+
+        private void appetizerGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            LoadAppetizerData();
+        }
+
+        private void label5_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -44,7 +44,7 @@
             // flowLayoutPanel1
             // 
             this.flowLayoutPanel1.Location = new System.Drawing.Point(16, 15);
-            this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(4);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Size = new System.Drawing.Size(485, 511);
             this.flowLayoutPanel1.TabIndex = 0;
@@ -67,11 +67,12 @@
             // 
             this.appetizerGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.appetizerGridView.Location = new System.Drawing.Point(513, 159);
-            this.appetizerGridView.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.appetizerGridView.Margin = new System.Windows.Forms.Padding(4);
             this.appetizerGridView.Name = "appetizerGridView";
             this.appetizerGridView.RowHeadersWidth = 51;
             this.appetizerGridView.Size = new System.Drawing.Size(320, 185);
             this.appetizerGridView.TabIndex = 29;
+            this.appetizerGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.appetizerGridView_CellContentClick);
             // 
             // lblUsername
             // 
@@ -163,7 +164,7 @@
             this.Controls.Add(this.label5);
             this.Controls.Add(this.flowLayoutPanel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "AppetizerForm";
             this.Text = "AppetizerForm";
             this.Load += new System.EventHandler(this.AppetizerForm_Load);

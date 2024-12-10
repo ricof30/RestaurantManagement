@@ -242,3 +242,5 @@ D:\RestaurantManagement-main\RestaurantManagement-main\RestaurantManagement\Rest
 D:\RestaurantManagement-main\RestaurantManagement-main\RestaurantManagement\RestaurantManagement\obj\Debug\Restaura.B356954C.Up2Date
 D:\RestaurantManagement-main\RestaurantManagement-main\RestaurantManagement\RestaurantManagement\obj\Debug\RestaurantManagement.exe
 D:\RestaurantManagement-main\RestaurantManagement-main\RestaurantManagement\RestaurantManagement\obj\Debug\RestaurantManagement.pdb
+D:\RestaurantManagement-main\RestaurantManagement-main\RestaurantManagement\RestaurantManagement\bin\Debug\RestaurantDb.mdf
+D:\RestaurantManagement-main\RestaurantManagement-main\RestaurantManagement\RestaurantManagement\bin\Debug\RestaurantDb_log.ldf
